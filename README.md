@@ -15,18 +15,17 @@ d'introduction au calcul mathematique avec Python et SageMath.
 ## Organisation du répertoire
 
 ``` bash.
-├── Codes
-│   ├── Intro_Python.ipynb # Jupyter notebook pour la partie introductive à python.
-│   ├── Pyscripts Ce reportoire contient deux scripts python.
-
-│   │   ├── OOP.ipynb
+├── codes
+│   ├── pyscripts Ce reportoire contient deux scripts python.
 │   │   ├── sqrt_hw1.py # TAF: remplacer tous les None dans ce code par des bout de codes qui permettent de faire fonctioner le programe principal. 
 │   │   └── sympy_basic.py # Structure simple d'un scripe python qui appele la librarie sympy.
 │   ├── sageMath
-│   └── sympy_tutorial.ipynb # Jupyter notebook qui contient tous le code utilisé dans le cours d'introduction à sympy.
+│   ├── notebooks
+│   │   ├── Intro_Python.ipynb # Jupyter notebook pour la partie introductive à python.
+│   │   └── sympy_tutorial.ipynb # Jupyter notebook qui contient tous le code utilisé dans le cours d'introduction à sympy.
 ├── LICENSE
 ├── README.md
-├── Slides
+├── slides
 │   ├── CIMPA_Burkina.pdf # the fichier pdf presenté en classe.
 │   ├── CIMPA_Burkina.tex # le code latex pour generer le fichier pdf.
 │   └── images # les images necessaires pour la compilation du code latex.
