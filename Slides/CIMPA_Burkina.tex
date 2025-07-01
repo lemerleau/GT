@@ -1,0 +1,1332 @@
+\documentclass[10pt]{beamer}
+\usepackage{tikz}
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+\usepackage{dirtytalk}
+\usepackage{xspace}
+\usepackage[export]{adjustbox}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\definecolor{mpigreen}{HTML}{007977}
+\setbeamercolor{frametitle}{bg=mpigreen}
+\usepackage{subfig}
+\definecolor{mpigreen}{HTML}{007977}
+\setbeamercolor{frametitle}{bg=mpigreen}
+\usepackage{array}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{xcolor} % For coloring
+
+% Set python style for listings
+\definecolor{codebg}{rgb}{0.97,0.97,0.97}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{mypython}{
+language=Python,
+backgroundcolor=\color{codebg},
+commentstyle=\color{codegray}\ttfamily\footnotesize,
+keywordstyle=\color{blue}\bfseries,
+numberstyle=\tiny\color{codegray},
+stringstyle=\color{codepurple},
+basicstyle=\ttfamily\footnotesize,
+breaklines=true,
+numbers=left,
+numbersep=6pt,
+frame=single,
+rulecolor=\color{gray!60},
+columns=fullflexible,
+showstringspaces=false,
+}
+
+% --- Define colors for the shell (customizable) ---
+\definecolor{shellbg}{rgb}{0.05,0.07,0.07}
+\definecolor{shellprompt}{rgb}{0.3,0.9,0.4}
+\definecolor{shelltext}{rgb}{0.9,0.9,0.9}
+
+% --- Define a custom shell style, with prompt coloring ---
+\lstdefinelanguage{bash}{
+sensitive=true,
+alsoletter={-,/},
+morekeywords={sudo,pwd,cd,mkdir,rm,ls,cp,mv,find,echo,export, Python},
+}
+\newtcolorbox[auto counter,number within=section
+]{debox}[1][]{enhanced jigsaw,
+colback=green!0!white,
+coltext={black},
+colframe={black},
+coltitle={black},
+boxrule=0pt,
+frame hidden,
+borderline west={1mm}{0mm}{white!50!red},
+arc=0mm,
+auto outer arc,
+boxsep=5pt,
+left=4pt,
+breakable,
+right=4pt,
+bottom=0pt,
+top=0pt,
+before skip=3mm,
+after skip=3mm,
+%label={def:\thetcbcounter},
+#1}
+
+\newcommand{\gd}[2]{\begin{debox}[label=#1]#2\end{debox}}
+
+\lstdefinestyle{advancedshell}{
+language=bash,
+backgroundcolor=\color{shellbg},
+basicstyle=\ttfamily\footnotesize\color{shelltext},
+frame=single,
+rulecolor=\color{shellprompt},
+breaklines=true,
+showstringspaces=false,
+columns=fullflexible,
+numbers=none,
+aboveskip=0.8em,
+belowskip=0.8em,
+literate={\$}{{\textcolor{shellprompt}{\$}}}{1}
+% You can add more, such as user/host prompt: {username@host:~\$}{\textcolor{shellprompt}{username@host:~\$}}{15}
+}
+\title{Calcul Mathématique avec \texttt{Python}/\texttt{SageMath}}
+
+\author{ \textbf{Cyrille Merleau Nono Saha} } 
+% \\Supervised by: Dr. Matteo Smerlak}
+\vspace{7cm}
+\institute{
+\textbf{CIMPA TRAP 2025} \\ \\ 
+University of Leipzig/ScaDS.AI\\
+Max Planck Institute for Mathematics in the Sciences\\
+Lancaster Leipzig University}
+
+\titlegraphic{
+
+\begin{tikzpicture}[overlay,remember picture]
+\node[right=0.6cm] at (current page.150){
+\includegraphics[width=3cm]{images/MPI-Logo.pdf}
+};
+\end{tikzpicture}
+
+\begin{tikzpicture}[overlay,remember picture]
+\node[left=0.6cm] at (current page.30){
+\includegraphics[width=3cm]{images/Scads-logo.png}
+};
+\end{tikzpicture}
+}
+
+\begin{document}
+%\section{Biological context }
+\maketitle
+
+\begin{frame}{Plan du cours}
+%\scriptsize
+\setbeamertemplate{section in toc}[sections numbered]
+\tableofcontents[hideallsubsections]
+%\thispagestyle{empty}
+\end{frame}
+
+\section[Team and resources]{\textbf{Team and resources}} 
+
+\begin{frame}{Team and resources}
+\begin{block}{Instructors}
+\begin{itemize}
+	\item Nono Saha Cyrille Merleau
+	\item The participants (You)
+\end{itemize}
+\end{block}
+\begin{block}{Course resources (s)}
+\begin{itemize}
+	\item GitHub
+	\item Readings and link to the course tools
+	\item No specific material: A reading list is given on the references page. 
+\end{itemize}
+\end{block}
+
+
+\begin{block}{Course Timetable (s)}
+\begin{itemize}
+	\item Lectures: 01.07, 04.07, 08.07, and 10.07
+\end{itemize}
+\end{block}
+\end{frame}
+
+%\section{\textbf{Organisation du cours}}
+%
+%\begin{frame}{Course Organisation}
+%	\begin{block}{Objectifs}
+%		\begin{itemize}
+%			\item Setting up our programming environment
+%			\item Introduction to \texttt{Python} Programming
+%			\item Object Oriented Programming with \texttt{Python}
+%			\item Introduction to symbolic computation with \textbf{Sympy}
+%			\item Introduction to Group Theory with \texttt{SageMath}/\texttt{Python}
+%		\end{itemize}
+%	\end{block}
+%\end{frame}
+
+%
+%\section{\textbf{Before next Wednesday...}}
+%\begin{frame}{Before next Wednesday...}
+%	
+%	\begin{block}{Introductory survey}
+%		\vspace*{0.2cm}
+%		Please follow this link and answer the questions to get to know each other.  \small \url{https://forms.office.com/e/Vm3memrUjz?origin=lprLinkk}
+%	\end{block}
+%	
+%	\begin{block}{First home work}
+%		\begin{enumerate}
+%			\item Create a GitLab account if you do not have one yet 
+%			\item Ensure your programming environment is set up correctly.
+%			\item Complete the course survey (the link is given above).
+%			\item If 1, 2 and 3 are done, create your first GitLab repo containing a README.md file. It will briefly describe the steps you took to set up your environment. e.g. the OS, the command used, the problems encountered, how you solved them, etc...
+%		\end{enumerate}
+%	\end{block}
+%	
+%\end{frame}
+
+\section[Programming environment]{\textbf{Programming environment}} 
+
+\begin{frame}[fragile]{Setting your environment up}
+
+\begin{itemize}
+\item \href{https://docs.conda.io/projects/miniconda/en/latest/}{Conda} with a specific python version
+\begin{lstlisting}[style=advancedshell]
+$ conda --version 
+\end{lstlisting}
+\item Check your package manager 
+\begin{lstlisting}[style=advancedshell, numbers=none]
+$ pip --version or pip3 --version 
+\end{lstlisting}
+
+\item Create your conda environment
+\begin{lstlisting}[style=advancedshell]
+$conda create --name CIMPA sage python=3.11
+$conda activate CIMPA
+\end{lstlisting}
+\item Run sage on your 
+\begin{lstlisting}[style=advancedshell, numbers=none]
+$ sage
+\end{lstlisting}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Introduction to Git}
+\begin{block}{What is Git?}
+\begin{itemize}
+	\item Modern version control system
+	\item Mature, actively maintained, open-source project (Linus Torvalds, 2005)
+	\item Works well on a wide range of operating systems and IDEs
+\end{itemize}
+\end{block}
+\begin{block}{Main characteristics}
+\begin{itemize}
+	\item Distributed VCS \emph{vs} CVC 
+	\item Performance: Algorithms, File content/names
+	\item Security: Top priority and SHA1 hashing algorithm  for commits, content, file-folder
+	\item Flexibility: small and large projects, many OS, branches and tags
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Essential git commands} 
+\begin{block}{Init and clone directories}
+\begin{itemize}
+	\item \textbf{git init}: creates an empty Git repository 
+	\item \textbf{git clone}: clone a repository into a new directory
+	\item More importantly, learn to use the "manual"
+\end{itemize}
+\end{block}
+\begin{block}{Basic commands}
+\begin{itemize}
+	\item \textbf{git pull}: get recent updates from the remote to the local branch
+	\item \textbf{git add } <file or folder>: add file contents to the index
+	\item \textbf{git commit }-m <some comments>: record changes to the repository
+	\item \textbf{git push} <origin> <branch>: update remote refs along with associated objects
+\end{itemize}
+\end{block}
+\begin{block}{More commands}
+\begin{itemize}
+	\item \textbf{git merge},  \textbf{git fetch}, \textbf{git status}, \textbf{git log}
+	\item  \href{https://git-scm.com/docs}{More on Git Document}
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Introduction to \texttt{Python}}
+
+\begin{block}{What is \texttt{Python}?}
+\begin{itemize}
+	\item A programming language that boasts ease of use
+	\item Dynamic typing and garbage-collected language
+	\item Batteries included (\small \url{pypi.python.org})
+\end{itemize}
+\end{block}
+
+\begin{block}{Several advantages}
+\begin{itemize}
+	\item Code readability with the use of significant indentation via the off-side rule
+	\item High level and for general purposes
+	\item Structured, functional and OO-programming 
+\end{itemize}
+\end{block}
+
+\begin{block}{Important!!!!!}
+\begin{itemize}
+	\item  Network sockets, database handles, windows, and file descriptors are not included in the garbage-collection
+	\item Need of other methods (e.g. destructors)
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Variables: basic types}
+\begin{block}{What is a variable?}
+
+\begin{itemize}
+	\item A value stored in computer memory
+	\item It should have a name and store the corresponding value
+	\item Use a combination of alphanumeric characters and the underscore character for names
+	\item Convention recommends lowercase characters with words separated by an underscore for readability
+\end{itemize}
+\end{block}
+
+\begin{block}{Type system:}
+
+\begin{itemize}
+	\item \textbf{Boolean} (or \textbf{bool}): e.g.  True, False 
+	\item  \textbf{Float}: e.g. 1., 1.0, 2.4
+	\item \textbf{Integer} (or \textbf{int}): e.g. 1, 34
+	\item \textbf{Complex Number} (or \textbf{complex}): e.g. 1+1j , 1+0j, 4j, etc..
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Variable: dynamic types}  % add fragile to allow using lstlisting in frame
+Therefore, most basic operations will coerce a variable to a consistent type suitable for the operation.
+
+\begin{block}{Boolean operations and comparisons}
+\vspace{-0.5cm}
+\begin{table}
+	\centering
+\begin{tabular}{p{5cm}p{5cm}p{5cm}}
+\begin{lstlisting}[style=mypython]
+1 and True
+## True	
+0 or 1
+## 1 
+not 0
+## True	
+not (0+0j)
+## True	
+not (0+1j)
+## False						
+\end{lstlisting}&
+\begin{lstlisting}[style=mypython, numbers=none]
+5. > 1
+## True
+5. ==  5 
+## True
+1 > True
+## False
+(1+0j) == 1
+## True
+'abc' < "ABC"
+## False 
+\end{lstlisting}
+\end{tabular}
+\end{table}
+\end{block}
+\end{frame}
+\begin{frame}[fragile]{Variables: basic mathematical operations}
+
+\begin{block}{Math operations}
+\vspace{-0.85cm}
+\begin{table}
+	\centering		
+\begin{tabular}{p{5cm}p{5cm}p{5cm}}
+\begin{lstlisting}[style=mypython]
+1 + 5
+## 6
+1 + 5.
+## 6.
+1 * 5.
+## 5.0
+True * 5
+## 5
+(1 + 0j) - (1 + 1j)	
+## -1j 			
+\end{lstlisting}&
+\begin{lstlisting}[style=mypython, numbers=none]
+5 / 1.
+## 5.0
+5 / 2
+## 2.5
+5 // 2 
+## 2
+5 % 2 
+## 1
+7 ** 2
+## 49 
+\end{lstlisting}
+\end{tabular}
+\end{table}
+\vspace{-0.9cm}
+Now, what if I do? 
+\begin{lstlisting}[style=mypython]
+"abc" + 5  	## Error? What type of error? Why? 
+"abc" + str(5) ## Does that correct the prev error?
+"abc" ** 2 # What about this? 
+"abc" * 3  # And this?
+\end{lstlisting}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Variables: casting and assignment}
+\begin{block}{Casting using type functions: e.g. float(), int(), etc..}
+\vspace*{-0.5cm}
+\begin{tabular}{ p{4cm} p{4cm} }
+	\centering
+	\begin{lstlisting}[style=mypython]
+float ("0.5")
+## 0.5
+float(True)	
+## 1.0
+int(1.1)
+## 1
+int("2")
+## 2
+	\end{lstlisting} & 
+	\begin{lstlisting}[style=mypython, numbers=none]
+bool(0)
+## False
+bool("hello")
+## ??
+str(3.14159) 
+## "3.14159"
+str(True) 
+## "True"
+	\end{lstlisting}   
+\end{tabular}
+
+\vspace*{-0.7cm}
+Now, what if I do? 
+\begin{lstlisting}[style=mypython]
+int("2.1")
+## Error? What type of error? Why? 
+\end{lstlisting}
+\vspace*{-0.15cm}
+Variable assignment
+\begin{lstlisting}[style=mypython]
+x = 100 ## Assign a value of 100 to a variable named x
+a = b = 5 ## Assign a value of 5 to both variables a and b
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]{Variables: special values }
+No missing values and non-finite floating point values are available. There is a None type similar to  NULL in \texttt{R}, \texttt{Java}, \texttt{JavaScript}.
+\begin{lstlisting}[style=mypython]
+1 / 0
+## Error in py_call_impl(callable, dots$args, 
+dots$keywords):
+ZeroDivisionError: division by zero
+## Detailed traceback:
+## File "<string>", line 1, in <module>
+
+1. / 0 # qu'en est il de ceci? 
+
+float("nan")
+## nan
+float("-inf")
+## -inf, we can do 5 > float("inf")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Variables: string literals}
+\vspace*{-0.1cm}
+Strings can be defined using a couple of different ways,
+\begin{lstlisting}[style=mypython]
+'allows embedded "double" quotes'
+##' allows embedded "double" quotes'
+\end{lstlisting}
+
+\begin{lstlisting}[style=mypython]
+"allows embedded 'single' quotes"
+## "allows embedded 'single' quotes"
+\end{lstlisting}
+\vspace*{-0.2cm}
+Strings can also be triple quoted, using single or double quotes, which allows the string to span multiple lines.
+\begin{lstlisting}[style=mypython]
+"""line one line two line three""" 
+## 'line one\nline two\nline three'
+\end{lstlisting}
+\vspace*{-0.1cm}
+Several methods are possible: 
+\begin{lstlisting}[style=mypython]
+x = "Hello wolrd! 1234"
+x.find("!"), x.isalnum(), x.title(), x.swapcase(),
+x.split()
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Variables: sequence types}
+\begin{block} {Lists in \texttt{Python}}
+\vspace*{0.1cm}
+Python lists are heterogeneous, ordered, mutable containers of objects.
+
+\begin{lstlisting}[style=mypython]
+x = [0,1,1,0]; x
+## [0, 1, 1, 0], we can use subsetting with x[start:stop:step]
+
+[0, True, "abc"]
+## [0, True, 'abc'] mutate an element, x[-1] = 2
+
+[0, [1,2], [3,[4]]]
+## [0, [1, 2], [3, [4]]], can we assign?
+
+x = [0,1,1,0]
+type(x)
+## <class 'list'> we can sort with x.sort()
+
+y = [0, True, "abc"]
+type(y)
+## <class 'list'> is y.sort() still work?
+\end{lstlisting}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Variables: sequence types}
+\begin{block} {Unpacking lists in \texttt{Python}}
+\vspace*{0.2cm}
+
+Unpacking into multiple variables when doing "assignment",
+
+
+\begin{lstlisting}[style=mypython]
+x, y = [1,2]
+x
+## 1 similarly we can do x, y = [[0,1], [2, 3]]
+y
+## 2
+x, y = [1, [2, 3]]
+x
+## 1 or something like (x1,y1), (x2,y2)=[[0,1], [2, 3]]
+y
+## [2, 3]
+\end{lstlisting}
+\vspace*{-0.2cm}
+Extended unpacking:
+\begin{lstlisting}[style=mypython]
+x, *y = [1,2,3] ## what about this x, y = [1,2,3]? 
+y ## [2, 3] what about *x, y = [1,2,3]?
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Variables: sequence types}
+\begin{block} {Tuples in \texttt{Python}}
+\vspace*{0.1cm}
+\texttt{Python} tuples are heterogenous, ordered, immutable (or non-mutable) containers of values.
+
+\begin{lstlisting}[style=mypython]
+(1,2,3)
+## (1, 2, 3)
+
+(1,True," abc")
+## (1, True, 'abc')
+
+(1,(2,3))
+## (1, (2, 3))
+
+x = (1,2,3)
+x[2] = 5 ## What will happen here? 
+\end{lstlisting}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Variable: ranges as a sequence type}
+These are the last sequence types and are somewhat special - ranges are homogeneous, ordered, and immutable "containers" of integers.
+
+\textbf{Examples}: 
+\vspace{0.2cm}
+\begin{lstlisting}[style=mypython]
+range(10) ## range(0, 10)
+
+range(0,10) ## range(0, 10)
+
+range(0,10,2) ## range(0, 10, 2)
+
+range(10,0,-1) ## range(10, 0, -1)
+
+list(range(10)) ## [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]. )
+\end{lstlisting}
+
+\textbf{Remarque}: What about this \texttt{list(range(10,0,-1))}?
+\end{frame}
+
+\begin{frame}{Homework}
+\begin{block}{Programming like a hipster! }
+\vspace*{0.3cm}
+\begin{itemize}
+	\item Write a program that computes a square root of any given integer. NB: making use of no Python library.
+	\item Given a list, write a program that returns an ascendent sorted list.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\section{\textbf{An introduction to OOP}}
+
+%\section{Class, interface, abstract class and object}
+\begin{frame}[fragile]{Basic syntax}
+These are the basic components of Python's object-oriented system.
+
+\begin{lstlisting}[style=mypython]
+class Rectangle:
+	"""An abstract representation of a rectangle"""
+	# Attributes
+	p1 = (0,0)
+	p2 = (1,2)
+
+	# Methods
+	def area(self):
+		return abs(self.p1[0] - self.p2[0]) 
+		*abs(self.p1[1] - self.p2[1])
+	
+	# Setters
+	def setP1(self, p1):
+		self.p1 = p1
+\end{lstlisting}
+\end{frame}
+
+%\section{\textbf{Interfaces and abstract classes}}
+\begin{frame}[fragile]{Interfaces and abstract classes}
+\begin{block}{Two important points}
+\begin{itemize}
+	\item Interfaces are classes that contain methods without implementations
+	\item Abstract classes are classes with at least one method without implementation
+\end{itemize}
+\end{block}
+
+\begin{block}{Example}
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=mypython]
+class AbstractRectangle(abc.ABC):   
+	def __init__(self, p1=(0,0), p2=(1,2)):         
+		self.p1 = p1
+		self.p2 = p2
+	
+	@abc.abstractmethod
+	def area(self): 
+		pass 
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Objects}
+\begin{block}{What is an object?}
+\begin{itemize}
+	\item Objects are instances of a class
+	\item Objects can also represent different states of a class
+	\item Objects are coherent entities that store data and the code (or instructions) working on that data. 
+\end{itemize}
+\end{block}
+
+\begin{block}{Example}
+\vspace{0.5cm}
+\begin{lstlisting}[style=mypython]
+x = Rectangle()
+x.area()
+\end{lstlisting}
+
+\begin{lstlisting}[style=mypython]
+y = Rectangle(p2= (5,4))
+y.area()
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]{Class attributes}
+We can examine all of a class's methods and attributes using \texttt{dir()},
+\begin{lstlisting}[style=mypython]
+dir(Rectangle)
+['__class__','__delattr__','__dict__','__dir__',
+'__doc__','__eq__','__format__','__ge__',
+'__getattribute__','__gt__','__hash__',
+'__init__','__init_subclass__','__iter__','__le__',
+'__lt__','__module__','__ne__','__new__',
+'__reduce__','__reduce_ex__','__repr__',
+'__setattr__','__sizeof__','__str__',
+'__subclasshook__','__weakref__','area']	
+\end{lstlisting}
+Where did p1 and p2 go?
+\begin{lstlisting}[style=mypython]
+dir(Rectangle())
+['__class__','__delattr__','__dict__','__dir__'...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Instantiation (constructors)}
+When instantiating a class (e.g. \texttt{Rectangle()}) we invoke the \texttt{\_\_init\_\_()} method if it is present in the classes' definition.
+
+\vspace{1cm}
+
+\begin{lstlisting}[style=mypython]
+class Rectangle:
+	"""An abstract representation of a rectangle"""
+	# Constructor
+	def __init__(self, p1 = (0,0), p2 = (1,1)):
+		self.p1 = p1
+		self.p2 = p2
+	
+	# Methods
+	def area(self):
+		return ((self.p1[0] - self.p2[0])
+		*(self.p1[1] - self.p2[1]))
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Method chaining}
+We will see several objects (e.g., \texttt{exp(-x).diff().diff()}) that allow for method chaining to construct a pipeline of operations. We can achieve the same effect by having our class methods return 'self'.\\
+\vspace{1cm}
+
+\begin{lstlisting}[style=mypython]
+class Rectangle:
+	"""An abstract representation of a rectangle"""
+	# Constructor
+	def __init__(self, p1 = (0,0), p2 = (1,1)):
+		self.p1 = p1
+		self.p2 = p2
+	# Methods
+	def area(self):
+		return ((self.p1[0] - self.p2[0])
+		*(self.p1[1] - self.p2[1]))
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Object string formating}
+All class objects have a default print method/string conversion method, but the default behaviour is not very useful,
+\begin{lstlisting}[style=mypython]
+print(Rectangle())
+## <__main__.rect object at 0x290aa1a60>
+
+str(Rectangle())
+## '<__main__.rect object at 0x290aa1ca0>'
+\end{lstlisting}
+Both of the above are handled by the \texttt{\_\_str\_\_()} method, which is implicitly created for our class - we can override this,
+\begin{lstlisting}[style=mypython]
+def rect_str(self):
+	return f"Rectangle[{self.p1}, {self.p2}]
+	area={self.area()}"
+
+Rectangle.__str__ = rect_str
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Class representation}
+There is another special method responsible for printing the object (see \texttt{Rectangle()} above), called \texttt{\_\_repr\_\_()}, which is used to print the class representation. If possible, this is intended to be a valid Python expression that can recreate the object.
+\begin{lstlisting}[style=mypython]
+def rect_repr(self):
+	return f"Rectangle({self.p1}, {self.p2})"
+
+rect.__repr__ = rect_repr
+\end{lstlisting}
+
+\begin{lstlisting}[style=mypython]
+Rectangle()
+## Rectangle((0, 0), (1, 1))
+\end{lstlisting}
+
+\begin{lstlisting}[style=mypython]
+repr(Rectangle())
+## Rectangle((0, 0), (1, 1))
+\end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]{OOP:  Inheritance}
+Part of the object-oriented system is that classes can inherit from other classes, meaning they gain access to all of their parent's attributes and methods. It models a \textbf{Is a} relationship.
+
+In an inheritance relationship:
+
+\begin{itemize}
+\item Classes inherited from another are derived classes, subclasses, or subtypes.
+\item Classes from which other classes are derived are called base classes or superclasses.
+\item A derived class is said to derive, inherit, or extend a base class.
+\end{itemize}
+\begin{lstlisting}[style=mypython]
+class Square(Rectangle): 
+	pass 
+\end{lstlisting}
+\begin{lstlisting}[style=mypython]
+Square()
+## Rectangle((0, 0), (1, 1))
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{OOP: Multiple inheritance}
+A class can be derived from more than one superclass in Python. This is called multiple inheritance.
+\begin{lstlisting}[style=mypython]
+class Worm:
+	def __init__ (self, name): 
+		self.name = name
+	def eat(self): 
+		print(self.name +" swallows")
+
+class Fly:
+	def __init__ (self, name): 
+		self.name = name
+	def eat(self): 
+		print(self.name +" is nibbling..")
+
+class ButterFly(Worm, Fly): 
+	pass
+\end{lstlisting}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{OOP Inheritance: overriding methods}
+\begin{lstlisting}[style=mypython]
+class Square(Rectangle):
+	def __init__(self, p1=(0,0), l=1):
+		assert isinstance(l, (float, int)), "numnber, please"
+		p2 = (p1[0]+l, p1[1]+l)
+		self.l  = l
+		super().__init__(p1, p2)
+
+	def setP1(self, p1):
+		self.p1 = p1
+		self.p2 = (self.p1[0]+self.l, self.p1[1]+self.l)
+		return self
+	def setP2(self, p2):
+		raise RuntimeError("Squares take l not p2")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{OOP: Making an object iterable}
+When using an object with a for loop, Python looks for the \texttt{\_\_iter\_\_()} method, which is expected to return an iterator object (e.g. iter() of a list, tuple, etc...).
+\begin{lstlisting}[style=mypython]
+class Rectangle:
+""" An object representation of a rectangle"""
+# Constructor
+	def __init__(self, p1 = (0,0), p2 = (1,1)):
+		self.p1 = p1; self.p2 = p2
+	# Methods
+	def area(self):
+		return ((self.p1[0] - self.p2[0]) 
+		*(self.p1[1] - self.p2[1]))
+	def __iter__(self):
+		return iter( [ self.p1, (self.p1[0],
+					self.p2[1]), self.p2,(self.p2[0],
+					self.p1[1])])
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{OOP: Composition in \texttt{Python}}
+Composition is an OOP concept that models a relationship. In composition, a class known as a composite contains an object of another class, referred to as a component. In other words, a composite class has a component of another class.
+
+\textbf{Example}: We already used it in the previous Example, but how? and where?
+
+\begin{block}{Remarks}
+\begin{itemize}
+	\item Composition is more flexible than inheritance because it models a loosely coupled relationship
+	\item Changes to a component class have minimal or no effects on the composite class
+	\item Designs based on composition are more suitable for change
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Example of composition in \texttt{Python}}
+\begin{lstlisting}[style=mypython]
+class Salary:
+	def __init__(self, pay, bonus):
+		self.pay = pay
+		self.bonus = bonus
+	def annual_salary(self):
+		return (self.pay*12)+self.bonus
+
+class EmployeeOne:
+	def __init__(self, name, age, pay, bonus):
+		self.name = name
+		self.age = age
+		self.obj_salary = Salary(pay, bonus)  # comp
+	def total_sal(self):
+		return self.obj_salary.annual_salary()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{OOP: Aggregation in \texttt{Python}}
+\textbf{Aggregation} is a concept in which an object of one class can own or access another independent object of another class. 
+
+\begin{itemize}
+\item It represents \textbf{Has-A}'s relationship.
+\item It is a unidirectional association, i.e. a one-way relationship. For Example, a department can have students, but the opposite is not possible, and thus it is unidirectional.
+\item In Aggregation, both entries can survive individually, which means ending one entity will not affect another.	
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Example of aggregation in \texttt{Python}}
+\begin{lstlisting}[style=mypython]
+class Salary:
+	def __init__(self, pay, bonus):
+		self.pay = pay
+		self.bonus = bonus
+	
+	def annual_salary(self):
+		return (self.pay*12)+self.bonus
+	
+class EmployeeOne:
+	def __init__(self, name, age, sal):
+		self.name = name
+		self.age = age
+		self.agg_salary = sal   # Aggregation
+	
+	def total_sal(self):
+		return self.agg_salary.annual_salary()
+\end{lstlisting}
+%salary = Salary(10000, 1500)
+%emp = EmployeeOne('Geek', 25, salary)  
+%print(emp.total_sal())
+\end{frame}
+
+\begin{frame}[fragile]{OOP: more relationships...}
+\begin{itemize}
+\item \textbf{Association}: which expresses a uses-a relationship. For Example, a student may be associated with a course. They will use the course. This relationship is common in database systems, where it is often represented by one-to-one, one-to-many, and many-to-many associations. 
+\item \textbf{Delegation}: which models a \textbf{can-do} relationship, where an object hands a task over to another object, which takes care of executing the task.
+\item \textbf{Dependency injection}: a design pattern you can use to achieve loose coupling between a class and its components. With this technique, you can provide an object's dependencies from the outside rather than inheriting or implementing them in the object itself.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Polymorphism in \texttt{Python}}
+A set of classes implementing the same interface with specific behaviours for concrete classes is a great way to unlock Polymorphism.
+
+\textbf{Polymorphism} is when you can use objects of different classes interchangeably because they share a standard interface. 
+
+\begin{block}{Example}
+\vspace{0.1cm}
+Python strings, lists, and tuples are all sequence data types. This means that they implement an interface that's common to all sequences.
+\end{block}
+
+We can use them in similar ways. For Example, you can:
+
+\begin{itemize}
+\item Loop them because they provide the \texttt{.\_\_iter\_\_()} method
+\item Items are accessed through the \texttt{\_\_getitem\_\_()} method
+\item Determine their number of items because they include the \texttt{.\_\_len\_\_()} method
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Wrapping up the OOP in \texttt{Python}}
+
+
+\begin{enumerate}
+\item Python classes and how to use them to make your code more reusable, modular, flexible, and maintainable
+\item Classes are the building blocks of object-oriented programming in Python
+\item With classes, you can solve complex problems by modelling real-world objects, their properties, and their behaviours
+\item Classes provide an intuitive and human-friendly approach to complex programming problems, making your life more pleasant.
+\item We can use special classes such as interfaces and abstract classes to unlock properties like Polymorphism in python
+\item Classes can interact through associations, aggregations, composition, inheritance, dependency injection and delegation 
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Exercise: Object-Oriented Programming in Python}
+
+\textbf{Tasks:}
+\begin{enumerate}
+\item Define a Python class \texttt{Book} with attributes for \texttt{title}, \texttt{author}, and \texttt{year}.
+\item Write an \texttt{\_\_init\_\_} method that initializes these attributes.
+\item Add a method \texttt{description} that returns a string like \\
+\texttt{"Title by Author (Year)"}.
+\item Create an instance of your class for the book "The Hobbit" by J.R.R. Tolkien, published in 1937, and print its description.
+\end{enumerate}
+
+\vspace{2mm}
+\textbf{Optional:} Extend the class with a method to check if the book is a classic (published before 1970).
+\end{frame}
+
+\begin{frame}[fragile]{Solution: Object-Oriented Programming in \texttt{Python}}
+\begin{lstlisting}[style=mypython]
+class Book:
+	def __init__(self, title, author, year):
+		self.title = title
+		self.author = author
+		self.year = year
+
+	def description(self):
+		return f"{self.title} by {self.author} ({self.year})"
+
+	def is_classic(self):
+		return self.year < 1970
+
+# Create an instance
+hobbit = Book("The Hobbit", "J.R.R. Tolkien", 1937)
+print(hobbit.description())           # The Hobbit by J.R.R. Tolkien (1937)
+print(hobbit.is_classic())            # True
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Exercise: Object-Oriented Programming — Authors and Books}
+
+Define two Python classes representing books and authors.
+
+\textbf{Tasks:}
+\begin{enumerate}
+\item Define a class \texttt{Author} with attributes: \texttt{firstname}, \texttt{lastname}, \texttt{affiliation}, and \texttt{address}.
+\item Define a class \texttt{Book} with attributes: \texttt{title}, \texttt{year}, and \texttt{author} (where \texttt{author} is an object of class \texttt{Author}).
+\item Write appropriate \texttt{\_\_init\_\_} methods for both classes.
+\item Add a \texttt{description} method in \texttt{Book} that returns a string like:\\
+\texttt{"Title (Year) by Firstname Lastname, Affiliation"}.
+\item Create an instance of \texttt{Author} for ``J.R.R. Tolkien'' (affiliated with ``University of Oxford'', address: ``Oxford, UK'') and a \texttt{Book} instance for ``The Hobbit'' (1937, by Tolkien). Print the book description.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Solution: Author and Book Classes in Python}
+\begin{lstlisting}[style=mypython]
+class Author:
+def __init__(self, firstname, lastname, affiliation, address):
+	self.firstname = firstname
+	self.lastname = lastname
+	self.affiliation = affiliation
+	self.address = address
+class Book:
+	def __init__(self, title, year, author):
+		self.title = title
+		self.year = year
+		self.author = author  # Author object
+
+def description(self):
+	return f"{self.title} ({self.year}) by {self.author.firstname} {self.author.lastname}, {self.author.affiliation}"
+
+# Create Author and Book instances
+tolkien = Author("J.R.R.", "Tolkien", "University of Oxford", "Oxford,UK")
+hobbit = Book("The Hobbit", 1937, tolkien)
+print(hobbit.description())
+\end{lstlisting}
+\end{frame}
+\section{\textbf{\texttt{Sympy} and symbolic mathematics}}
+
+\begin{frame}[fragile]{Sympy basics: importing a module/package in Python}
+\begin{block} {What is \texttt{Sympy}?}
+\vspace*{0.1cm}
+\gd{impliciteintersection}{
+SymPy is a Python library that enables symbolic mathematics, including calculus operations like differentiation and integration. It allows users to work with mathematical expressions, equations, and functions symbolically rather than just numerical computation}
+\end{block}
+
+\begin{block}{\textbf{How to install \texttt{Sympy}?}}
+\vspace{0.2cm}
+\begin{lstlisting}[style=mypython]
+pip install sympy 
+\end{lstlisting}
+\end{block}
+
+\begin{block}{\textbf{Example test}}
+\vspace{0.2cm}
+\begin{lstlisting}[style=mypython]
+import sympy as sym
+x, y = sym.symbols('x y')
+\end{lstlisting}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Sympy basics: differentiation, integration, and limits.}
+\begin{block} {Defferentiation}
+\vspace*{0.1cm}
+Use \texttt{sympy.diff(function, variable)} to find the derivative of a function with respect to a variable:
+\begin{lstlisting}[style=mypython]
+f = x**2 + 2*x + 1
+df_dx = sym.diff(f, x)  # Derivative of f with respect to x
+print(df_dx)  # Output: 2*x + 2
+\end{lstlisting}
+\end{block}	
+\vspace{-0.4cm}
+\begin{block}{\textbf{Integration}}
+\vspace{0.1cm}
+\begin{lstlisting}[style=mypython]
+integral_f = sym.integrate(f, x) #Indefinite integral of f with respect to x
+print(integral_f) #Output: x**3/3 + x**2 + x
+\end{lstlisting}
+\end{block}
+\vspace{-0.4cm}
+\begin{block}{\textbf{Limits}}
+\vspace{0.1cm}
+Use sympy.limit(function, variable, point) to evaluate the limit of a function as the variable approaches a specific point: 
+\begin{lstlisting}[style=mypython]
+limit_f = sym.limit((sym.sin(x) / x), x, 0)
+print(limit_f) # Output: 1
+\end{lstlisting}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Application to Physics (1): Uniformly Accelerated Motion }
+
+The position of an object under constant acceleration:\vspace{2mm}
+\[
+x(t) = x_0 + v_0 t + \frac{1}{2} a t^2
+\]
+
+\vspace{2mm}
+\textbf{Symbolic computation with \texttt{sympy}:}
+
+\begin{lstlisting}[style=mypython]
+from sympy import symbols, Eq, solve, N
+
+# Define symbols
+x, x0, v0, a, t = symbols('x x0 v0 a t')
+
+# Kinematics equation
+eq = Eq(x, x0 + v0*t + (1/2)*a*t**2)
+
+# Given: x0 = 0, v0 = 5 (m/s), a = 2 (m/s^2), t = 3
+subs = {x0: 0, v0: 5, a: 2, t: 3}
+x_val = eq.subs(subs)
+
+print("Position at t=3s:", N(x_val.rhs))  # Output: 21.0
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Application to Physics (2): The Ideal Gas Law}
+
+The ideal gas equation relates pressure, volume, temperature, and the number of moles:
+\[
+PV = nRT
+\]
+Suppose we wish to solve for the pressure $P$.
+
+\vspace{0mm}
+\textbf{Symbolic computation with \texttt{sympy}:}
+
+\begin{lstlisting}[style=mypython]
+P, V, n, R, T = symbols('P V n R T') # Define symbols
+
+# Ideal gas law
+eq = Eq(P*V, n*R*T)
+
+# Solve for pressure
+P_sol = solve(eq, P)[0]
+print("P =", P_sol)
+
+# Numerical example: V=10 L, n=2 mol, T=300 K, R=0.0821 L*atm/(mol*K)
+values = {V: 10, n: 2, T: 300, R: 0.0821}
+P_num = P_sol.subs(values)
+print("Pressure:", P_num)        # Output: 4.926
+\end{lstlisting}
+
+\vspace{2mm}
+\textbf{Result:} $P = \dfrac{nRT}{V}$, and for the given values, $P \approx 4.93$~atm.
+\end{frame}
+
+\begin{frame}[fragile]{Solving ODE Systems via Laplace Transform with \texttt{sympy}}
+\vspace{-0.3cm}
+\[
+\dot{x} = 3x + 4y,\quad \dot{y} = -4x + 3y,\quad x(0) = 1,\, y(0) = 0
+\]
+%	\textbf{SymPy Solution (Laplace Transform):}
+\begin{lstlisting}[style=mypython]
+from sympy import symbols, Function, laplace_transform, inverse_laplace_transform, dsolve
+from sympy.abc import t, s
+
+# Define functions
+x = Function('x')
+y = Function('y')
+
+# System as equations
+eq1 = x(t).diff(t) - 3*x(t) - 4*y(t)
+eq2 = y(t).diff(t) + 4*x(t) - 3*y(t)
+
+# Solve system with initial conditions
+sol = dsolve([eq1, eq2], [x(t), y(t)], ics={x(0):1, y(0):0})
+
+print(sol)
+\end{lstlisting}
+
+\textbf{Result:} $x(t) = e^{3t}\cos(4t),\quad y(t) = e^{3t}\sin(4t)$  
+\end{frame}
+
+\section{\textbf{Live demo...}}
+
+
+\begin{frame}{Reading list}
+\begin{itemize}
+\item C. Thomas Wu, (2010) "An Introduction to Object-Oriented Programming with Java", McGraw-Hill  
+
+\item Priestley, (2003) "Practical Object-Oriented Design with UML", McGraw-Hill 
+
+\item Peter Van Roy and Seif Haridi (2004) "Concepts, Techniques, and Models of Computer Programming", MIT Press. 
+
+\item Haskell, R. \& Hanna, A. (2008) "Introduction to Functional Programming in Python and C++", Cambridge University Press. 
+
+\item Andrew Troelsen and Philip Japikse (2020) "Pro C\# 9 with .NET 5: Foundational Principles and Practices in Programming", Apress. 
+
+\item Axel Rauschmayer (2019) "JavaScript for impatient programmers", Dr. Axel Rauschmayer. 
+
+%\item Boris Cherny (2019) "Programming TypeScript: Making Your JavaScript Applications Scale", O'Reilly Media. 
+
+%\item Brian Goetz (2006) "Java Concurrency in Practice", Addison-Wesley. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{List of important commands}
+\begin{itemize}
+\item Create your environment with
+\begin{lstlisting}[style=advancedshell]
+conda create -f `yml file' -n `env_name' python=3.9 
+\end{lstlisting}
+
+\item Activate that env
+\begin{lstlisting}[style=advancedshell]
+condo activate <env_name>
+\end{lstlisting}
+\item Install Jupyter
+\begin{lstlisting}[style=advancedshell]
+conda install -y jupyter  
+\end{lstlisting}
+\item Add the current env in the notebook kernel
+\begin{lstlisting}[style=advancedshell]
+python -m ipykernel install --user --name <env_name> --display-name 'kernel_name'
+\end{lstlisting}
+\item Export your conda in yml file 
+\begin{lstlisting}[style=advancedshell]
+conda env export | grep -v `^prefix:' > env.yml  
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\section{\textbf{Group Theory with SageMath}}
+\begin{frame}[fragile]{Introduction to Group Theory with SageMath}
+\textbf{Group Theory} studies algebraic structures called \emph{groups}.
+
+A \textbf{group} is a set $G$ with a binary operation $\cdot$ satisfying:
+\begin{itemize}
+\item \textbf{Closure:} $a, b \in G \implies a \cdot b \in G$
+\item \textbf{Associativity:} $(a \cdot b) \cdot c = a \cdot (b \cdot c)$
+\item \textbf{Identity:} $\exists e \in G$ such that $e \cdot a = a \cdot e = a$
+\item \textbf{Inverses:} $\forall a \in G, \exists b \in G$ such that $a \cdot b = b \cdot a = e$
+\end{itemize}
+\textbf{Example in SageMath: Symmetric group $S_3$}
+\vspace{1mm}
+\begin{lstlisting}[style=mypython]
+G = SymmetricGroup(3)
+print("Elements of S_3:", list(G))
+print("Is S_3 abelian?", G.is_abelian())
+\end{lstlisting}
+
+\vspace{-1mm}
+\textbf{Output:}
+\begin{itemize}
+\item Elements of $S_3$: \texttt{[(1,2,3), (1,3,2), (1,2), (2,3), (1,3), ()]}
+\item Is $S_3$ abelian? \texttt{False}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Examples of Groups in SageMath}
+\vspace{-1mm}
+\textbf{1. Symmetric group $S_3$}
+\begin{lstlisting}[style=mypython]
+G = SymmetricGroup(3)
+print(list(G))              # Permutations of 3 elements
+print(G.is_abelian())       # Is S_3 abelian? (False)
+\end{lstlisting}
+
+\vspace{-1mm}
+
+\textbf{2. Integers under Addition $(\mathbb{Z},+)$}
+\begin{lstlisting}[style=mypython]
+Z = IntegerModRing(7)
+print(list(Z))              # Elements: 0,1,...,6 (modulo 7)
+print(Z.is_commutative())   # True, Z/7Z is abelian under addition
+\end{lstlisting}
+
+\vspace{-1mm}
+
+\textbf{3. Cyclic group $C_4$ of order 4}
+\begin{lstlisting}[style=mypython]
+C4 = CyclicPermutationGroup(4)
+print(C4.order())           # 4
+print(C4.is_cyclic())       # True
+\end{lstlisting}
+
+\vspace{-1mm}
+
+\textbf{4. Quaternion group $Q_8$}
+\begin{lstlisting}[style=mypython]
+Q8 = QuaternionGroup()
+print(Q8.is_nonabelian())   # True
+print(Q8.center())          # Center elements of Q_8
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Subgroup Operations in SageMath}
+
+\textbf{Let's work with the symmetric group $S_4$:}
+
+\begin{lstlisting}[style=mypython]
+G = SymmetricGroup(4)
+# 1. List all subgroups (up to isomorphism)
+subs = G.subgroups()
+
+# 2. Generate a subgroup from elements
+a = G((1,2))        # permutation (1 2)
+b = G((3,4))        # permutation (3 4)
+H = G.subgroup([a, b])
+print(f "Order of H: {H.order()}, Elements:, {list(H)}")
+
+# 3. Normal closure (smallest normal subgroup containing an element)
+N = G.normal_closure([a])
+
+# 4. Intersection of two subgroups
+H1 = G.subgroup([G((1,2))]); H2 = G.subgroup([G((1,2,3,4))])
+intersection = H1.intersection(H2)
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Exercise: Subgroup Operations in $S_3$}
+Let $G = S_3$ be the symmetric group of degree 3.
+
+\textbf{Tasks:}
+\begin{enumerate}
+\item List all the subgroups of $G$.
+\item Find a subgroup $H$ of order $2$ and list its elements.
+\item Is $H$ a normal subgroup of $G$? Justify your answer.
+\item Find the intersection of $H$ with a subgroup $K$ of order $3$ in $G$.
+\end{enumerate}
+
+\vspace{2mm}
+\textbf{Hint:} You can use SageMath commands like\\
+\vspace{0.5cm}
+\begin{lstlisting}[style=mypython]
+G = SymmetricGroup(3)
+G.subgroups()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Usefull tutorials}
+
+\end{frame}
+
+\end{document}
