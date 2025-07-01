@@ -63,6 +63,7 @@ $ pip install sympy
 NB: Pour les utilisateur windows, vous devrez utiliser ce [Link](https://www.sagemath.org/download-windows.html) pour installer sageMath. 
 
 ## Organisation du répertoire
+```bash
 .
 ├── Codes ## Codes for the 
 │   ├── Intro_Python.ipynb
@@ -77,7 +78,7 @@ NB: Pour les utilisateur windows, vous devrez utiliser ce [Link](https://www.sag
 │   └── images
 └── thirdpart
     └── miniconda.exe 
-
+```
 ## Contact
 If you have any questions about this class's content or problems running this code, please contact me at [cyrillecardinale@gmail.com](mailto:cyrillecardinale@gmail.com.?subject=[GitHub]%20CART%20Lecture%20Material) 
 
