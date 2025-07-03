@@ -1,0 +1,268 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage{float}
+% Packages needed
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}       % For drawing the diagram
+\usetikzlibrary{arrows.meta, decorations.pathreplacing}
+\usetikzlibrary{patterns}
+\usepackage[french]{babel} % Because the text is French (optional, or remove if not needed)
+
+\begin{document}
+	
+	\section*{V.D}
+	
+	\subsection*{I. Variété topologique}
+	
+	Soit $M$ un espace topologique séparé.
+	
+	\subsubsection*{1. Carte}
+	
+	\textbf{Définition.} Une carte locale (sur $M$ en $p$) est un couple $(U, \varphi)$, où $U$ est un ouvert contenant $p$.
+	
+	\[
+	\varphi: U \to \varphi(U) \subset \mathbb{R}^n
+	\]
+	où $\varphi$ est un homéomorphisme.
+	
+	\begin{center}
+		\begin{tikzpicture}[scale=1.1]
+			% Draw M as an ellipse
+			\draw[thick] (0,0) ellipse (2 and 1.2);
+			\node at (2.4,1.1) {$M$};
+			
+			% Draw U inside
+			\draw[thick] (0,-0.1) ellipse (0.7 and 0.4);
+			% Fill U for illustration
+			\fill[gray!20,opacity=0.6] (0,-0.1) ellipse (0.7 and 0.4);
+			\node at (0,-0.6) {$U$};
+			
+			% Point p inside U
+			\fill (0,-0.1) circle (2pt);
+			\node[anchor=west] at (0.1,-0.1) {$p$};
+			
+			% Arrow downward from p
+			\draw[->,thick] (0,-0.1) -- (0,-2);
+			\node at (-0.2,-1) {$\varphi$};
+			
+			% Draw phi(U) as ellipse in R^n
+			\draw[thick] (0,-2.6) ellipse (1 and 0.5);
+			\fill[gray!20,opacity=0.6] (0,-2.6) ellipse (1 and 0.5);
+			\node at (0,-3.25) {$\varphi(U) \subset \mathbb{R}^n$};
+			
+			% Draw phi(p)
+			\fill (0,-2.6) circle (2pt);
+			\node[anchor=west] at (0.1,-2.6) {$\varphi(p)$};
+		\end{tikzpicture}
+	\end{center}
+	
+	\underline{\textbf{Exemple.}} Soit $E$ un e.v. de dimension $n$ et $\{e_1, \ldots, e_n\}$ une base de $E$. \\
+	Pour tout $v \in E$, on a :
+	\[
+	v = \sum_{i=1}^n v_i e_i.
+	\]
+	On considère
+	\[
+	\varphi : E \longrightarrow \mathbb{R}^n, \qquad v \longmapsto (v_1, \ldots, v_n)
+	\]
+	$(E, \varphi)$ est une carte.
+	
+%\begin{figure}[]
+%		\begin{center}
+%		\begin{tikzpicture}[scale=1.4, every node/.style={font=\small}]
+%			
+%			% Draw M as an irregular outer ellipse
+%			\draw[thick] (0,2.4) .. controls (2,3.7) and (5,3.5) .. (4.7,2)
+%			.. controls (4.5,0.6) and (2.5,0.1) .. (1,0.3)
+%			.. controls (-0.5,0.6) .. (0,2.4);
+%			
+%			\node at (4.8,2.7) {$M$};
+%			
+%			% Draw U1 and U2
+%			\draw[thick] (1,1.6) ellipse (1.1 and 0.7);
+%			\node at (0.1,2.2) {$U_1$};
+%			
+%			\draw[thick] (3.1,1.7) ellipse (1.1 and 0.7);
+%			\node at (4,2.3) {$U_2$};
+%			
+%			% Shaded intersection
+%			\begin{scope}
+%				\clip (1,1.6) ellipse (1.1 and 0.7);
+%				\fill[pattern=north east lines, opacity=0.3]
+%				(3.1,1.7) ellipse (1.1 and 0.7);
+%			\end{scope}
+%			
+%			% phi_1 arrow and its image
+%			\draw[thick, ->] (0.5,1) to[bend right=30] (-0.8,0.2);
+%			\node at (-1.1,0.5) {$\varphi_1$};
+%			\draw[thick] (-1.3,-0.3) ellipse (0.65 and 0.35);
+%			\node at (-1.3,-0.7) {$\varphi_1(U_1)$};
+%			
+%			% Shaded part in \varphi_1(U_1)
+%			\fill[pattern=north east lines, opacity=0.3] 
+%			(-1.3,-0.3) ellipse (0.3 and 0.15);
+%			
+%			% phi_2 arrow and its image
+%			\draw[thick, ->] (3.4,1) to[bend left=30] (5,0.2);
+%			\node at (5.25,0.5) {$\varphi_2$};
+%			\draw[thick] (5.3,-0.3) ellipse (0.65 and 0.35);
+%			\node at (5.3,-0.7) {$\varphi_2(U_2)$};
+%			
+%			% Shaded part in \varphi_2(U_2)
+%			\fill[pattern=north east lines, opacity=0.3] 
+%			(5.3,-0.3) ellipse (0.3 and 0.15);
+%			
+%			% R^n axes
+%			\draw[thick, ->] (2,-0.2) -- (2,1);
+%			\draw[thick, ->] (2,-0.2) -- (0.3,-1.1);
+%			\draw[thick, ->] (2,-0.2) -- (3.7,-1.1);
+%			\node at (2,-0.5) {$\mathbb{R}^n$};
+%			
+%			% transition map arrow
+%			\draw[thick, ->] (-0.7,0) .. controls (0.2,-0.7) and (3.8,-0.7) .. (4.8,0);
+%			\node at (2,-1.05) {$\varphi_2 \circ \varphi_1^{-1}$};
+%		\end{tikzpicture}
+%		
+%		\end{center}
+%\end{figure}
+	
+	\underline{\textbf{3- Atlas}}
+	
+	\medskip
+	
+	\underline{\textbf{Déf.}} Un atlas sur $M$ est la donnée sur $M$ d'une famille
+	\[
+	\mathcal{A} = \left\{ (U_i, \varphi_i) \right\}_{i \in I}
+	\]
+	de cartes telle que
+	\[
+	M = \bigcup_{i \in I} U_i.
+	\]
+	\textit{Si toutes les cartes sont de même dimension $n$, on dit que \ldots}
+	% (You can complete the sentence as needed)
+	
+\newpage	
+	\underline{\textbf{Ex (Sphère $\mathbb{S}^2$)}}
+	
+	\[
+	\mathbb{S}^2 = \left\lbrace (x_1, x_2, x_3) \in \mathbb{R}^3 ~\Big|~ \sum_{i=1}^3 x_i^2 = 1 \right\rbrace
+	\]
+	avec la topologie induite.\\
+	Pour $i=1,2,3$, on pose :
+	\[
+	U_i^+ = \left\lbrace (x_1, x_2, x_3) \in \mathbb{R}^3 ~|~ x_i > 0 \right\rbrace
+	\]
+	\[
+	U_i^- = \left\lbrace (x_1, x_2, x_3) \in \mathbb{R}^3 ~|~ x_i < 0 \right\rbrace
+	\]
+	
+	\[
+	\begin{array}{ccc}
+		\varphi_i^+ : U_i^+ & \longrightarrow & \mathbb{R}^2 \\
+		\quad\ x & \longmapsto & \check{x}^{i} \\
+	\end{array}
+	\qquad
+	\begin{array}{ccc}
+		\varphi_i^- : U_i^- & \longrightarrow & \mathbb{R}^2 \\
+		\quad\ x & \longmapsto & \check{x}^{i} \\
+	\end{array}
+	\]
+	\vspace{-1em}
+	où, par exemple, si $x=(x_1, x_2, x_3)$, alors
+	\[
+	\check{x}^{\,2} = (x_1, x_3).
+	\]
+	\[
+	{\color{red} U_1^+ = \left\{ (x_1, x_2, x_3) \;\middle|\; x_1>0 \right\} }
+	\]
+	
+	\textbf{Montrer que :}
+	\begin{enumerate}
+		\item $U_i^+,\, U_i^-$ sont des ouverts de $\mathbb{S}^2$;
+		\item $\varphi_i^+(U_i^+) = \varphi_i^-(U_i^-) = D_2$ (disque unité);
+		\item $\varphi_i^+,\, \varphi_i^-$ sont des homéomorphismes sur $D_2$;
+		\item $\left\{ (U_i^+, \varphi_i^+),\, (U_i^-, \varphi_i^-) \right\}$ forme un atlas sur $\mathbb{S}^2$;
+		\item Écrire les fonctions de transition.
+	\end{enumerate}
+	
+\newpage 
+	\underline{\textbf{Proposition}}: Soient $M$ et $N$ deux variétés topologiques et $ f \colon M \rightarrow N $, une application et $x_0 \in M$. 
+	
+	Les assertions suivantes sont equivalentes:
+	
+	\begin{enumerate}
+		\item $f$ est continue en $x_0$.
+		\item Il existe $(U, \varphi)$ en $x_0$, $(V, \psi)$ en $f(x_0)$ avec $f(U) \subset V$ et
+		\[
+		\psi \circ f \circ \varphi^{-1} : \varphi(U) \to \psi(V)
+		\]
+		est continue en $\varphi(x_0)$.
+		\item Pour tous $(U, \varphi)$ en $x_0$, $(V, \psi)$ en $f(x_0)$ avec $f(U) \subset V$, l'application
+		\[
+		\psi \circ f \circ \varphi^{-1} : \varphi(U) \to \psi(V)
+		\]
+		est continue en $\varphi(x_0)$.
+	\end{enumerate}
+	
+	\begin{figure}[H]
+		\begin{center}
+			\begin{tikzpicture}[>=latex,scale=1.2]
+				% Top nodes: M and N with open sets U,V
+				\node (M) at (-1.7,3.7) {$M$};
+				\draw (0,3.7) ellipse (1.4 and 1);
+				\node (U) at (-0.5,4.2) {$U$};
+				\draw (-0.5,3.7) ellipse (0.5 and 0.35);
+				\node (x0) at (-0.5,3.7) [circle,fill=black,inner sep=1.2pt]{};
+				\node at (-0.68,3.52) {$x_0$};
+				%
+				\node (N) at (4.5,3.7) {$N$};
+				\draw (6,3.7) ellipse (1.4 and 1);
+				\node (V) at (5.7,3.7) {$V$};
+				\draw (6.5,3.7) ellipse (0.5 and 0.35);
+				\node (fx0) at (6.5,3.7) [circle,fill=black,inner sep=1.2pt]{};
+				\node at (6.65,3.52) {$f(x_0)$};
+				
+				% f: M -> N
+				\draw[->,thick] (1.0,3.85) .. controls (3,5.0) and (4,5.0) .. (5.0,3.85) node[midway,above=10pt] {$f$};
+				
+				% Left chart: phi: U -> R^m
+				\draw[->,thick] (-0.65,3.2) .. controls (-2.,2.4) and (-0.9,1.2) .. (0,0.5);
+				\node at (-1.2,1.4) {$\varphi$};
+				
+				% Right chart: psi: V -> R^n
+				\draw[->,thick] (6.65,3.2) .. controls (8.,2.5) and (7.,1.) .. (6,0.5);
+				\node at (7.1,1.4) {$\psi$};
+				
+				% R^m and R^n axes
+				\draw[->] (0,0.5) -- ++(0,2);
+				\draw[->] (0,0.5) -- ++(-0.9,-0.6);
+				\draw[->] (0,0.5) -- ++(0.9,-0.6);
+				\node at (0,-0.1) {$\mathbb{R}^m$};
+				
+				\draw[->] (6,0.5) -- ++(0,2);
+				\draw[->] (6,0.5) -- ++(-0.9,-0.6);
+				\draw[->] (6,0.5) -- ++(0.9,-0.6);
+				\node at (6,-0.1) {$\mathbb{R}^n$};
+				
+				% Images of U, V under charts and points
+				\draw (0,0.5) ellipse (0.5 and 0.21);
+				\node at (0.7,0.8) {$\varphi(U)$};
+				\draw[pattern=north east lines,opacity=0.3] (0,0.5) ellipse (0.23 and 0.1);
+				\draw (0,0.5) [fill=black] circle (.05);
+				\node at (-0.17,0.32) {$\varphi(x_0)$};
+				
+				\draw (6,0.5) ellipse (0.5 and 0.21);
+				\node at (5.25,0.8) {$\psi(V)$};
+				\draw[pattern=north east lines,opacity=0.3] (6,0.5) ellipse (0.23 and 0.1);
+				\draw (6,0.5) [fill=black] circle (.05);
+				\node at (6.13,0.32) {$\psi(f(x_0))$};
+				
+				% Lower map: psi o f o phi^{-1}
+				\draw[->,thick] (0.5,0.5) -- (5.5,0.5);
+				\node at (3,0.68) {$\psi \circ f \circ \varphi^{-1}$};
+			\end{tikzpicture}
+		\end{center}
+	\end{figure}
+\end{document}
