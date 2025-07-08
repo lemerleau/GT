@@ -1,0 +1,604 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage{float}
+% Packages needed
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
+\usepackage{tikz}       % For drawing the diagram
+\usetikzlibrary{arrows.meta, decorations.pathreplacing}
+\usetikzlibrary{patterns}
+\usepackage[french]{babel} % Because the text is French (optional, or remove if not needed)
+
+\begin{document}
+	
+	\section*{V.D}
+	
+	\subsection*{I. Variété topologique}
+	
+	Soit $M$ un espace topologique séparé.
+	
+	\subsubsection*{1. Carte}
+	
+	\textbf{Définition.} Une carte locale (sur $M$ en $p$) est un couple $(U, \varphi)$, où $U$ est un ouvert contenant $p$.
+	
+	\[
+	\varphi: U \to \varphi(U) \subset \mathbb{R}^n
+	\]
+	où $\varphi$ est un homéomorphisme.
+	
+	\begin{center}
+		\begin{tikzpicture}[scale=1.1]
+			% Draw M as an ellipse
+			\draw[thick] (0,0) ellipse (2 and 1.2);
+			\node at (2.4,1.1) {$M$};
+			
+			% Draw U inside
+			\draw[thick] (0,-0.1) ellipse (0.7 and 0.4);
+			% Fill U for illustration
+			\fill[gray!20,opacity=0.6] (0,-0.1) ellipse (0.7 and 0.4);
+			\node at (0,-0.6) {$U$};
+			
+			% Point p inside U
+			\fill (0,-0.1) circle (2pt);
+			\node[anchor=west] at (0.1,-0.1) {$p$};
+			
+			% Arrow downward from p
+			\draw[->,thick] (0,-0.1) -- (0,-2);
+			\node at (-0.2,-1) {$\varphi$};
+			
+			% Draw phi(U) as ellipse in R^n
+			\draw[thick] (0,-2.6) ellipse (1 and 0.5);
+			\fill[gray!20,opacity=0.6] (0,-2.6) ellipse (1 and 0.5);
+			\node at (0,-3.25) {$\varphi(U) \subset \mathbb{R}^n$};
+			
+			% Draw phi(p)
+			\fill (0,-2.6) circle (2pt);
+			\node[anchor=west] at (0.1,-2.6) {$\varphi(p)$};
+		\end{tikzpicture}
+	\end{center}
+	
+	\underline{\textbf{Exemple.}} Soit $E$ un e.v. de dimension $n$ et $\{e_1, \ldots, e_n\}$ une base de $E$. \\
+	Pour tout $v \in E$, on a :
+	\[
+	v = \sum_{i=1}^n v_i e_i.
+	\]
+	On considère
+	\[
+	\varphi : E \longrightarrow \mathbb{R}^n, \qquad v \longmapsto (v_1, \ldots, v_n)
+	\]
+	$(E, \varphi)$ est une carte.
+	
+%\begin{figure}[]
+%		\begin{center}
+%		\begin{tikzpicture}[scale=1.4, every node/.style={font=\small}]
+%			
+%			% Draw M as an irregular outer ellipse
+%			\draw[thick] (0,2.4) .. controls (2,3.7) and (5,3.5) .. (4.7,2)
+%			.. controls (4.5,0.6) and (2.5,0.1) .. (1,0.3)
+%			.. controls (-0.5,0.6) .. (0,2.4);
+%			
+%			\node at (4.8,2.7) {$M$};
+%			
+%			% Draw U1 and U2
+%			\draw[thick] (1,1.6) ellipse (1.1 and 0.7);
+%			\node at (0.1,2.2) {$U_1$};
+%			
+%			\draw[thick] (3.1,1.7) ellipse (1.1 and 0.7);
+%			\node at (4,2.3) {$U_2$};
+%			
+%			% Shaded intersection
+%			\begin{scope}
+%				\clip (1,1.6) ellipse (1.1 and 0.7);
+%				\fill[pattern=north east lines, opacity=0.3]
+%				(3.1,1.7) ellipse (1.1 and 0.7);
+%			\end{scope}
+%			
+%			% phi_1 arrow and its image
+%			\draw[thick, ->] (0.5,1) to[bend right=30] (-0.8,0.2);
+%			\node at (-1.1,0.5) {$\varphi_1$};
+%			\draw[thick] (-1.3,-0.3) ellipse (0.65 and 0.35);
+%			\node at (-1.3,-0.7) {$\varphi_1(U_1)$};
+%			
+%			% Shaded part in \varphi_1(U_1)
+%			\fill[pattern=north east lines, opacity=0.3] 
+%			(-1.3,-0.3) ellipse (0.3 and 0.15);
+%			
+%			% phi_2 arrow and its image
+%			\draw[thick, ->] (3.4,1) to[bend left=30] (5,0.2);
+%			\node at (5.25,0.5) {$\varphi_2$};
+%			\draw[thick] (5.3,-0.3) ellipse (0.65 and 0.35);
+%			\node at (5.3,-0.7) {$\varphi_2(U_2)$};
+%			
+%			% Shaded part in \varphi_2(U_2)
+%			\fill[pattern=north east lines, opacity=0.3] 
+%			(5.3,-0.3) ellipse (0.3 and 0.15);
+%			
+%			% R^n axes
+%			\draw[thick, ->] (2,-0.2) -- (2,1);
+%			\draw[thick, ->] (2,-0.2) -- (0.3,-1.1);
+%			\draw[thick, ->] (2,-0.2) -- (3.7,-1.1);
+%			\node at (2,-0.5) {$\mathbb{R}^n$};
+%			
+%			% transition map arrow
+%			\draw[thick, ->] (-0.7,0) .. controls (0.2,-0.7) and (3.8,-0.7) .. (4.8,0);
+%			\node at (2,-1.05) {$\varphi_2 \circ \varphi_1^{-1}$};
+%		\end{tikzpicture}
+%		
+%		\end{center}
+%\end{figure}
+	
+	\underline{\textbf{3- Atlas}}
+	
+	\medskip
+	
+	\underline{\textbf{Déf.}} Un atlas sur $M$ est la donnée sur $M$ d'une famille
+	\[
+	\mathcal{A} = \left\{ (U_i, \varphi_i) \right\}_{i \in I}
+	\]
+	de cartes telle que
+	\[
+	M = \bigcup_{i \in I} U_i.
+	\]
+	\textit{Si toutes les cartes sont de même dimension $n$, on dit que \ldots}
+	% (You can complete the sentence as needed)
+	
+\newpage	
+	\underline{\textbf{Ex (Sphère $\mathbb{S}^2$)}}
+	
+	\[
+	\mathbb{S}^2 = \left\lbrace (x_1, x_2, x_3) \in \mathbb{R}^3 ~\Big|~ \sum_{i=1}^3 x_i^2 = 1 \right\rbrace
+	\]
+	avec la topologie induite.\\
+	Pour $i=1,2,3$, on pose :
+	\[
+	U_i^+ = \left\lbrace (x_1, x_2, x_3) \in \mathbb{R}^3 ~|~ x_i > 0 \right\rbrace
+	\]
+	\[
+	U_i^- = \left\lbrace (x_1, x_2, x_3) \in \mathbb{R}^3 ~|~ x_i < 0 \right\rbrace
+	\]
+	
+	\[
+	\begin{array}{ccc}
+		\varphi_i^+ : U_i^+ & \longrightarrow & \mathbb{R}^2 \\
+		\quad\ x & \longmapsto & \check{x}^{i} \\
+	\end{array}
+	\qquad
+	\begin{array}{ccc}
+		\varphi_i^- : U_i^- & \longrightarrow & \mathbb{R}^2 \\
+		\quad\ x & \longmapsto & \check{x}^{i} \\
+	\end{array}
+	\]
+	\vspace{-1em}
+	où, par exemple, si $x=(x_1, x_2, x_3)$, alors
+	\[
+	\check{x}^{\,2} = (x_1, x_3).
+	\]
+	\[
+	{\color{red} U_1^+ = \left\{ (x_1, x_2, x_3) \;\middle|\; x_1>0 \right\} }
+	\]
+	
+	\textbf{Montrer que :}
+	\begin{enumerate}
+		\item $U_i^+,\, U_i^-$ sont des ouverts de $\mathbb{S}^2$;
+		\item $\varphi_i^+(U_i^+) = \varphi_i^-(U_i^-) = D_2$ (disque unité);
+		\item $\varphi_i^+,\, \varphi_i^-$ sont des homéomorphismes sur $D_2$;
+		\item $\left\{ (U_i^+, \varphi_i^+),\, (U_i^-, \varphi_i^-) \right\}$ forme un atlas sur $\mathbb{S}^2$;
+		\item Écrire les fonctions de transition.
+	\end{enumerate}
+	
+\newpage 
+	\underline{\textbf{Proposition}}: Soient $M$ et $N$ deux variétés topologiques et $ f \colon M \rightarrow N $, une application et $x_0 \in M$. 
+	
+	Les assertions suivantes sont equivalentes:
+	
+	\begin{enumerate}
+		\item $f$ est continue en $x_0$.
+		\item Il existe $(U, \varphi)$ en $x_0$, $(V, \psi)$ en $f(x_0)$ avec $f(U) \subset V$ et
+		\[
+		\psi \circ f \circ \varphi^{-1} : \varphi(U) \to \psi(V)
+		\]
+		est continue en $\varphi(x_0)$.
+		\item Pour tous $(U, \varphi)$ en $x_0$, $(V, \psi)$ en $f(x_0)$ avec $f(U) \subset V$, l'application
+		\[
+		\psi \circ f \circ \varphi^{-1} : \varphi(U) \to \psi(V)
+		\]
+		est continue en $\varphi(x_0)$.
+	\end{enumerate}
+	
+	\begin{figure}[H]
+		\begin{center}
+			\begin{tikzpicture}[>=latex,scale=1.2]
+				% Top nodes: M and N with open sets U,V
+				\node (M) at (-1.7,3.7) {$M$};
+				\draw (0,3.7) ellipse (1.4 and 1);
+				\node (U) at (-0.5,4.2) {$U$};
+				\draw (-0.5,3.7) ellipse (0.5 and 0.35);
+				\node (x0) at (-0.5,3.7) [circle,fill=black,inner sep=1.2pt]{};
+				\node at (-0.68,3.52) {$x_0$};
+				%
+				\node (N) at (4.5,3.7) {$N$};
+				\draw (6,3.7) ellipse (1.4 and 1);
+				\node (V) at (5.7,3.7) {$V$};
+				\draw (6.5,3.7) ellipse (0.5 and 0.35);
+				\node (fx0) at (6.5,3.7) [circle,fill=black,inner sep=1.2pt]{};
+				\node at (6.65,3.52) {$f(x_0)$};
+				
+				% f: M -> N
+				\draw[->,thick] (1.0,3.85) .. controls (3,5.0) and (4,5.0) .. (5.0,3.85) node[midway,above=10pt] {$f$};
+				
+				% Left chart: phi: U -> R^m
+				\draw[->,thick] (-0.65,3.2) .. controls (-2.,2.4) and (-0.9,1.2) .. (0,0.5);
+				\node at (-1.2,1.4) {$\varphi$};
+				
+				% Right chart: psi: V -> R^n
+				\draw[->,thick] (6.65,3.2) .. controls (8.,2.5) and (7.,1.) .. (6,0.5);
+				\node at (7.1,1.4) {$\psi$};
+				
+				% R^m and R^n axes
+				\draw[->] (0,0.5) -- ++(0,2);
+				\draw[->] (0,0.5) -- ++(-0.9,-0.6);
+				\draw[->] (0,0.5) -- ++(0.9,-0.6);
+				\node at (0,-0.1) {$\mathbb{R}^m$};
+				
+				\draw[->] (6,0.5) -- ++(0,2);
+				\draw[->] (6,0.5) -- ++(-0.9,-0.6);
+				\draw[->] (6,0.5) -- ++(0.9,-0.6);
+				\node at (6,-0.1) {$\mathbb{R}^n$};
+				
+				% Images of U, V under charts and points
+				\draw (0,0.5) ellipse (0.5 and 0.21);
+				\node at (0.7,0.8) {$\varphi(U)$};
+				\draw[pattern=north east lines,opacity=0.3] (0,0.5) ellipse (0.23 and 0.1);
+				\draw (0,0.5) [fill=black] circle (.05);
+				\node at (-0.17,0.32) {$\varphi(x_0)$};
+				
+				\draw (6,0.5) ellipse (0.5 and 0.21);
+				\node at (5.25,0.8) {$\psi(V)$};
+				\draw[pattern=north east lines,opacity=0.3] (6,0.5) ellipse (0.23 and 0.1);
+				\draw (6,0.5) [fill=black] circle (.05);
+				\node at (6.13,0.32) {$\psi(f(x_0))$};
+				
+				% Lower map: psi o f o phi^{-1}
+				\draw[->,thick] (0.5,0.5) -- (5.5,0.5);
+				\node at (3,0.68) {$\psi \circ f \circ \varphi^{-1}$};
+			\end{tikzpicture}
+		\end{center}
+	\end{figure}
+	
+	\section{04.07.2025}
+	\underline{\textbf{Exercice sur $S^3 \subset \mathbb{R}^4$}}
+	
+	\[
+	X = -x^2 \frac{\partial}{\partial x^1} + x^1 \frac{\partial}{\partial x^2} + x^4 \frac{\partial}{\partial x^3} - x^3 \frac{\partial}{\partial x^4}
+	\]
+	\[
+	Y = -x^3 \frac{\partial}{\partial x^1} - x^4 \frac{\partial}{\partial x^2} + x^1 \frac{\partial}{\partial x^3} + x^2 \frac{\partial}{\partial x^4}
+	\]
+	\[
+	Z = -x^4 \frac{\partial}{\partial x^1} + x^3 \frac{\partial}{\partial x^2} - x^2 \frac{\partial}{\partial x^3} + x^1 \frac{\partial}{\partial x^4}
+	\]
+	
+	\begin{enumerate}
+		\item S'assurer que ce sont des champs de vecteurs sur $S^3$.
+		\item Montrer qu'ils sont linéairement indépendants.
+	\end{enumerate}
+	
+
+2. \textbf{Crochet de Lie de Champ de vecteur}
+Soient 
+\[
+X = \sum_{i=1}^{n} X^i \frac{\partial}{\partial x^i} = X^i \partial_i
+\]
+et
+\[
+Y = \sum_{j=1}^{n} Y^j \frac{\partial}{\partial x^j} = Y^j \partial_j
+\]
+où\quad $\partial_k = \frac{\partial}{\partial x^k}$
+	
+	
+\begin{align*}
+	TM &= \bigcup_{p \in M} T_pM \\ 
+	&= \left. \bigcup_{p \in M} T_pM \right. \\ 
+		&\equiv \text{Fibré tangent de } M\\
+\end{align*}
+
+	
+	Comme $T_pM$ est un e.v., on note $T_p^*M$ son dual. On pose
+	\[
+	T^*M = \bigcup_{p \in M} T_p^*M
+	\]
+	\[
+	\text{(Fibré cotangent.)}
+	\]
+
+		On définit une projection naturelle~: 
+	\begin{align*}
+		\pi &: TM \to M \\ 
+		(p, v_p) &\mapsto p, \text{ si } v_p \in T_p M
+	\end{align*}
+		
+		\underline{Def.} Un champ de vecteurs sur $M$ est une application 
+		\[
+		X : M \to TM
+		\]
+		vérifiant :
+		\[
+		\pi \circ X = \mathrm{id}_M
+		\]
+		
+		\textcolor{red}{(En fait $TM$ est une variété de dimension $2 \dim M$)}
+		
+		
+		Si $X$ est un champ de vecteurs sur $M$, $X(p) \in T_pM$, \\
+		$\forall p \in M$, donc en c.l.
+		\[
+		X(p) = \sum_{i=1}^{n} X^i(p) \left. \frac{\partial}{\partial x^i} \right|_p
+		\]
+		On peut donc écrire :
+		\[
+		X = \sum_{i=1}^{n} X^i \frac{\partial}{\partial x^i}
+		\]
+		
+		
+		où $X^i$ sont des fonctions lisses sur un ouvert de $M$.
+		
+		\underline{\textbf{Notation}}
+		
+		\begin{itemize}
+			\item $\mathscr{X}(M)$ = champs lisses sur $M$.
+			\item Si $X \in \mathscr{X}(M)$, $p \in M$, $X_p := X(p)$.
+			\item Si $f : M \longrightarrow N$ est différentiable en $p \in M$ et $X \in \mathscr{X}(M)$,
+		\end{itemize}
+		
+		\[
+		T_p f \cdot X|_p = X|_p(f)
+		\]
+		désignera l'action de la différentielle en $p$ de $f$ sur le vecteur tangent $X|_p$.
+		
+		\[
+		\text{\underline{Ex}} \qquad \text{Sur } \mathbb{R}^3
+		\]
+		\[
+		X = xz \frac{\partial}{\partial x} + x^2 y \frac{\partial}{\partial y} + \frac{\partial}{\partial z}
+		\]
+		
+		\underline{\textbf{Exercice}} sur $S^3 \subset \mathbb{R}^4$, \\
+		
+		\[
+		X = -x^2 \frac{\partial}{\partial x^1} + x^1 \frac{\partial}{\partial x^2} + x^4 \frac{\partial}{\partial x^3} - x^3 \frac{\partial}{\partial x^4}
+		\]
+		\[
+		Y = -x^3 \frac{\partial}{\partial x^1} - x^4 \frac{\partial}{\partial x^2} + x^1 \frac{\partial}{\partial x^3} + x^2 \frac{\partial}{\partial x^4}
+		\]
+		\[
+		Z = -x^4 \frac{\partial}{\partial x^1} + x^3 \frac{\partial}{\partial x^2} - x^2 \frac{\partial}{\partial x^3} + x^1 \frac{\partial}{\partial x^4}
+		\]
+		
+		\vspace{0.3cm}
+		\begin{enumerate}
+			
+			\item S'assurer que ce sont des champs de vecteurs sur $S^3$.
+			\item Montrer qu'ils sont linéairement indépendants.
+			
+		\end{enumerate}
+		
+\begin{align*}
+	XY &= \left( \sum_{i=1}^n X^i \frac{\partial}{\partial x^i} \right) \left( \sum_{j=1}^n Y^j \frac{\partial}{\partial x^j} \right) \\ 
+	&= \sum_{i=1}^n \sum_{j=1}^n \left( X^i \frac{\partial}{\partial x^i} \right) \left( Y^j \frac{\partial}{\partial x^j} \right) \\
+	&= \sum_{i=1}^n \sum_{j=1}^n X^i \left[ \frac{\partial Y^j}{\partial x^i} \frac{\partial}{\partial x^j} + Y^j \frac{\partial^2}{\partial x^i \partial x^j} \right] \\
+	&= \left( X^i \frac{\partial Y^j}{\partial x^i} \right) \frac{\partial}{\partial x^j} + X^i Y^j \frac{\partial^2}{\partial x^i \partial x^j}
+\end{align*}
+	
+	\begin{align*}
+		\cdot \quad YX &= (Y^j \partial_j X^i) \partial_i + X^i Y^j \partial_{ji}^2 \\
+		\cdot \quad XY - YX &= \left[ X^i \partial_i Y^j - Y^i \partial_i X^j \right] \partial_j
+	\end{align*}
+	On pose \([X, Y] = XY - YX =\) \emph{crochet de Lie de \(X\) et \(Y\)}.
+	
+	\section{07.07.2025}
+	Pour tout $g \in G$, on définit \\
+	$L_g : G \to G$, $R_g: G \to G$\\
+	\[
+	\begin{array}{ll}
+		L_g : & h \mapsto gh \\
+		R_g : & h \mapsto hg
+	\end{array}
+	\]
+	Elles sont $C^\infty$ et vérifient :
+	\[
+	\begin{aligned}
+		& L_g \circ R_h = R_h \circ L_g, \quad \forall g, h \\
+		& L_g \circ L_h = L_{gh} \\
+		& R_g \circ R_h = R_{hg} \\
+		& L_e = R_e = Id_G \\
+	\end{aligned}
+	\]
+	\medskip
+	
+	\noindent
+	\textasteriskcentered~Les translations sont des difféo. \\
+	$L_{g^{-1}} = L_g^{-1}$ \\
+	et $R_{g^{-1}} = R_g^{-1}$ \\
+	
+	\medskip
+	
+	\noindent
+	\textbf{Exemple} \\
+	$GL(n, \mathbb{R})$ \\
+	\[
+	H_3 = \left\lbrace
+	\begin{pmatrix}
+		1 & x & z \\
+		0 & 1 & y \\
+		0 & 0 & 1
+	\end{pmatrix} ,\, x, y, z \in \mathbb{R}
+	\right\rbrace
+	\]
+	\medskip
+	
+	\noindent
+	\textasteriskcentered~On rappelle qu'une transformation affine de $\mathbb{R}$ est une application
+	\[
+	f : \mathbb{R} \longrightarrow \mathbb{R}, \quad x \mapsto ax + b
+	\]
+	où $(a, b) \in \mathbb{R}^* \times \mathbb{R}$.
+	\\
+	Si $g : x \mapsto a'x + b'$ est une autre transformation affine, on a :
+	\[
+	(f \circ g)(x) = f(a'x + b') = a(a'x + b') + b = aa'x + ab' + b
+	\]
+	\medskip
+	
+	$f \circ g$ est un T.A.
+	
+	\[
+	\text{Aff}(\mathbb{R}) = \left\lbrace f : x \mapsto ax + b,\,\, a \in \mathbb{R}^*, b \in \mathbb{R} \right\rbrace
+	\]
+	est un groupe.
+	
+	L'inverse $f : x \mapsto a x + b$ est
+	\[
+	f^{-1} : x \mapsto \frac{1}{a}x - \frac{b}{a}
+	\]
+	En fait $\operatorname{Aff}(\mathbb{R}) = \mathbb{R}^* \ltimes \mathbb{R}$. Avec la structure différentielle induite par celle de $\mathbb{R}^* \times \mathbb{R}$, $\operatorname{Aff}(\mathbb{R})$ est un groupe de Lie.
+	
+	\[
+	\operatorname{Aff}(\mathbb{R}) = \mathbb{R}^* \times \mathbb{R}
+	\]
+	avec la loi
+	\[
+	(a, b) (a', b') = (a a', a b' + b)
+	\]
+	
+	\textbf{Déf.} Soit $G$ un groupe de Lie.\\
+	Un sous-groupe de Lie de $G$ est une partie $H$ de $G$ vérifiant :
+	\begin{itemize}
+		\item $H$ est un sous-groupe de $G$,
+		\item $H$ est une sous-variété immergée de $G$ : $H \hookrightarrow G$ est une immersion.
+	\end{itemize}
+	
+	\textbf{\underline{Thm (É. Cartan)}}
+	
+	\vspace{1em}
+	
+	Tout sous-groupe fermé d'un groupe de Lie est un sous-groupe de Lie.
+	
+	\vspace{2em}
+	
+	En conséquence, tout sous-groupe fermé de $GL_n(\mathbb{R})$ est un groupe de Lie, dit groupe de Lie linéaire.
+	
+	\underline{\textbf{Exemple}}
+	
+	\begin{itemize}
+		\item $SL_n(\mathbb{R})$, $SL_n(\mathbb{C})$
+		\item $O(n)$, $O(n,\mathbb{C})$
+		\item $SO(n)$, $U(n)$
+	\end{itemize}
+	
+	sont des groupes de Lie linéaires.
+	
+	\vspace{1em}
+	\[
+	\underline{\text{III. \; Algèbre de Lie d'un groupe de Lie.}}
+	\]
+	
+	
+	\textbf{1. Champ de vecteurs invariant à gauche.}
+	
+	\vspace{1em}
+	
+	$G$, $e$, $\mathfrak{X}(G)$ (algèbre de Lie)
+	
+	\vspace{1em}
+	
+	\underline{Déf.} $X \in \mathfrak{X}(G)$ est dit invariant à gauche si :
+	
+	\[
+	T_h L_g \cdot X_h = X_{gh}, \quad \forall g, h \in G
+	\]
+	
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[scale=4, every node/.style={font=\small}]
+			% Draw the object G, with boundary
+			\draw[thick, blue!30!black] (0.2,0.2) .. controls (0,1) and (0.8,2.5) .. (2,2.2) 
+			.. controls (2.5,1.8) and (2.3,0.8) .. (1.8,0.3) 
+			.. controls (1.5,0.1) and (1,0.1) .. (0.2,0.2);
+			\node at (-0.05,0.15) {$G$};
+			
+			% Draw points for g1, g2, h, gh
+			\fill (0.7,0.55) circle (0.8pt);
+			\node[left] at (0.65,0.55) {$g_1$};
+			\fill (0.6,1.2) circle (0.8pt);
+			\node[left] at (0.57,1.2) {$g_2$};
+			\fill (1.15,1.1) circle (0.8pt);
+			\node[below] at (1.2,1.08) {$h$};
+			
+			\fill (1.65,1.85) circle (0.8pt);
+			\node[right] at (1.7,1.85) {$gh$};
+			
+			% Red arrows: left-invariant vector fields
+			\draw[->,red,thick] (0.7,0.55) -- +(0.25,0.28) node[right] {$X_{g_1}$};
+			\draw[->,red,thick] (0.6,1.2) -- +(0.45,0.22) node[right] {$X_{g_2}$};
+			\draw[->,red,thick] (1.15,1.1) -- +(0.32,0.42) node[right] {$X_{h}$};
+			\draw[->,red,thick] (1.65,1.85) -- +(0.22,0.15) node[right] {$X_{gh}$};
+			
+			% Blue arrow: pushforward
+			\draw[->,blue,thick] (1.65,1.85) -- +(0.26,-0.08) 
+			node[below right] {$T_h L_g X_h$};
+		\end{tikzpicture}
+	\end{figure}
+	
+	On note $\mathfrak{X}_L(G) \equiv$ champs inv. à gauche.
+	
+	\vspace{1em}
+	
+	\noindent
+	\textbf{Prop}: $\mathfrak{X}_L(G)$ est une sous-algèbre de Lie de $\mathfrak{X}(G)$.
+	
+	\underline{Def.} \\
+	$\mathfrak{X}_L(G) =$ algèbre de Lie de $G$.
+	
+	\vspace{1em}
+	
+	Soit $\xi \in T_e G$. On définit \\
+	(uniquement) $X^\xi \in \mathfrak{X}_L(G)$ :
+	
+	\[
+	(X^\xi)_g := T_e L_g \cdot \xi
+	\]
+	
+	
+	On montre que $X^\xi \in \mathfrak{X}_L(G)$. \\
+	En effet, $\forall g, h \in G$,
+\begin{align*}
+	(X^\xi)_{gh} &= T_e L_{gh} \, \xi \\
+	\phantom{(X^\xi)_{gh}} &= T_e(L_g \circ L_h) \, \xi \\
+	\phantom{(X^\xi)_{gh}} &  = T_h L_g \circ T_e L_h \, \xi = T_h L_g (X^\xi_h) \qed \\
+\end{align*}
+
+\textbf{Prop.} L'application
+\[
+T_e G \longrightarrow \mathfrak{X}_L(G)
+\]
+\[
+\xi \longmapsto X^\xi
+\]
+est un isomorphisme d'espaces vectoriels (d'e.v.).
+
+\vspace{1em}
+
+On peut dès lors transporter le crochet de Lie de $\mathfrak{X}_L(G)$ sur $T_e G$.
+
+Pour tous $\xi, \eta \in T_e G$,
+\[
+[\xi, \eta]_L := [X^\xi, X^\eta] \big|_e
+\]
+
+Ainsi, $(T_e G, [\, , \, ]_L)$ est une algèbre de Lie isomorphe à l'algèbre de Lie $\mathfrak{X}_L(G)$ du groupe de Lie $G$.
+
+
+	
+\end{document}
