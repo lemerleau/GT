@@ -1,0 +1,3 @@
+algebras.FiniteDimensional # Use this to define a finite dimensional Algebra. 
+
+

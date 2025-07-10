@@ -22,6 +22,7 @@
 \usepackage[most]{tcolorbox}
 \usepackage{listings}
 \usepackage{xcolor} % For coloring
+\usepackage{sagetex}
 
 % Set python style for listings
 \definecolor{codebg}{rgb}{0.97,0.97,0.97}
@@ -802,7 +803,7 @@ class ButterFly(Worm, Fly):
 
 \end{frame}
 
-\begin{frame}[fragile]{OOP Inheritance: overriding methods}
+\begin{frame}[fragile]{OOP Inheritance: Overriding methods}
 \begin{lstlisting}[style=mypython]
 class Square(Rectangle):
 	def __init__(self, p1=(0,0), l=1):
@@ -841,7 +842,7 @@ class Rectangle:
 
 
 \begin{frame}[fragile]{OOP: Composition in \texttt{Python}}
-Composition is an OOP concept that models a relationship. In composition, a class known as a composite contains an object of another class, referred to as a component. In other words, a composite class has a component of another class.
+In composition, a class known as a composite contains an object of another class, referred to as a component. In other words, a composite class has a component of another class.
 
 \textbf{Example}: We already used it in the previous Example, but how? and where?
 
@@ -949,6 +950,22 @@ We can use them in similar ways. For Example, you can:
 \item Classes can interact through associations, aggregations, composition, inheritance, dependency injection and delegation 
 \end{enumerate}
 
+\end{frame}
+
+\begin{frame}{Exercise (En français): Groups and POO}
+	\textbf{Task}: Créer une classe \texttt{Python} qui permet de construire une groupe cyclique d'ordre $3$.
+	
+	Un \textbf{groupe} est un ensemble $G$ muni d'une opération $\ast$ (loi interne) qui vérifie les quatre propriétés suivantes :
+	\begin{enumerate}
+		\item \textbf{Fermeture:} \\
+		$\forall\, a, b \in G,\quad a \ast b \in G$
+		\item \textbf{Associativité:} \\
+		$\forall\, a, b, c \in G,\quad (a \ast b) \ast c = a \ast (b \ast c)$
+		\item \textbf{Élément neutre:} \\
+		$\exists\, e \in G$ tel que $\forall\, a \in G,\quad e \ast a = a \ast e = a$
+		\item \textbf{Élément inverse:} \\
+		$\forall\, a \in G,\, \exists\, b \in G$ tel que $a \ast b = b \ast a = e$
+	\end{enumerate}
 \end{frame}
 
 \begin{frame}{Exercise: Object-Oriented Programming in Python}
@@ -1088,7 +1105,7 @@ The position of an object under constant acceleration:\vspace{2mm}
 x(t) = x_0 + v_0 t + \frac{1}{2} a t^2
 \]
 
-\vspace{2mm}
+\vspace{-1.5mm}
 \textbf{Symbolic computation with \texttt{sympy}:}
 
 \begin{lstlisting}[style=mypython]
@@ -1106,7 +1123,7 @@ x_val = eq.subs(subs)
 
 print("Position at t=3s:", N(x_val.rhs))  # Output: 21.0
 \end{lstlisting}
-
+\textbf{Rk}: Do not use $I, E, S, N, C, O,$ or $Q$ for variable or symbol names.
 \end{frame}
 
 \begin{frame}[fragile]{Application to Physics (2): The Ideal Gas Law}
@@ -1167,56 +1184,81 @@ print(sol)
 \textbf{Result:} $x(t) = e^{3t}\cos(4t),\quad y(t) = e^{3t}\sin(4t)$  
 \end{frame}
 
-\section{\textbf{Live demo...}}
+\section{\textbf{\texttt{sage} and Symbolic mathematics}}
+\begin{frame}[fragile]{\texttt{sage}: what can we do with it? And how?}
+\gd{impliciteintersection}{\texttt{Sage} is free, open-source math software that supports research and teaching in algebra, geometry, number theory, cryptography, numerical computation, and related areas. Both the Sage development model and the technology in Sage itself are distinguished by an extremely strong emphasis on openness, community, cooperation, and collaboration: we are building the car, not reinventing the wheel. The overall goal of Sage is to create a viable, free, open-source alternative to \texttt{Maple}, \texttt{Mathematica}, \texttt{Magma}, and \texttt{MATLAB}.}
 
+\begin{block}{\textbf{How to install  and run \texttt{sage}?}}
+%	\vspace{0.2cm}
+	\begin{lstlisting}[style=advancedshell]
+ $ conda  create --name sage sage=<version> python=<version>
+ $ conda activate sage 
+ $ sage
+	\end{lstlisting}
+\end{block}
+\vspace{-0.1cm}
+\begin{block}{\textbf{Example test}}
+\begin{sageblock}
+H = groups.matrix.Heisenberg()
+\end{sageblock}
 
-\begin{frame}{Reading list}
-\begin{itemize}
-\item C. Thomas Wu, (2010) "An Introduction to Object-Oriented Programming with Java", McGraw-Hill  
-
-\item Priestley, (2003) "Practical Object-Oriented Design with UML", McGraw-Hill 
-
-\item Peter Van Roy and Seif Haridi (2004) "Concepts, Techniques, and Models of Computer Programming", MIT Press. 
-
-\item Haskell, R. \& Hanna, A. (2008) "Introduction to Functional Programming in Python and C++", Cambridge University Press. 
-
-\item Andrew Troelsen and Philip Japikse (2020) "Pro C\# 9 with .NET 5: Foundational Principles and Practices in Programming", Apress. 
-
-\item Axel Rauschmayer (2019) "JavaScript for impatient programmers", Dr. Axel Rauschmayer. 
-
-%\item Boris Cherny (2019) "Programming TypeScript: Making Your JavaScript Applications Scale", O'Reilly Media. 
-
-%\item Brian Goetz (2006) "Java Concurrency in Practice", Addison-Wesley. 
-\end{itemize}
+\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{List of important commands}
-\begin{itemize}
-\item Create your environment with
-\begin{lstlisting}[style=advancedshell]
-conda create -f `yml file' -n `env_name' python=3.9 
-\end{lstlisting}
+\begin{frame}[fragile]{Sage and Latex: simple example of SageTex}
+	
+	Here's some Sage code:
+	
+	\begin{sageblock}
+		f(x) = exp(x) * sin(2*x)
+	\end{sageblock}
+	
+	The second derivative of $f$ is
+	
+	\[
+	\frac{\mathrm{d}^{2}}{\mathrm{d}x^{2}} \sage{f(x)} =
+	\sage{diff(f, x, 2)(x)}.
+	\]
+	
+	Here's a plot of $f$ from $-1$ to $1$:
+	
+\begin{figure}
+	\centering
+		\sageplot[width=0.45\textwidth]{plot(f, -1, 1)}
+\end{figure}
+\end{frame}
+\begin{frame}[fragile]{Getting help}
+Sage has extensive built-in documentation, accessible by typing the name of a function or a constant (for example), followed by a question mark:
 
-\item Activate that env
-\begin{lstlisting}[style=advancedshell]
-condo activate <env_name>
+\begin{lstlisting}{style=mypython}
+sage: tan?
+Type: <class 'sage.calculus.calculus.Function_tan'>
+Definition:  tan( [noargspec] )
+Docstring:
+
+The tangent function
+EXAMPLES:
+sage: tan(pi)
+0
+sage: tan(3.1415)
+-0.0000926535900581913
+sage: tan(3.1415/4)
+0.999953674278156
+....
 \end{lstlisting}
-\item Install Jupyter
-\begin{lstlisting}[style=advancedshell]
-conda install -y jupyter  
-\end{lstlisting}
-\item Add the current env in the notebook kernel
-\begin{lstlisting}[style=advancedshell]
-python -m ipykernel install --user --name <env_name> --display-name 'kernel_name'
-\end{lstlisting}
-\item Export your conda in yml file 
-\begin{lstlisting}[style=advancedshell]
-conda env export | grep -v `^prefix:' > env.yml  
-\end{lstlisting}
-\end{itemize}
 \end{frame}
 
-\section{\textbf{Group Theory with SageMath}}
+\begin{frame}[fragile]{Solving Differential Equations}
+You can use Sage to investigate ordinary differential equations. To solve the equation $$x'+x-1=0$$:
+
+\begin{lstlisting}[style=mypython]
+t = var('t')    
+x = function('x')(t)   
+DE = diff(x, t) + x - 1
+desolve(DE, [x,t])
+\end{lstlisting}
+\end{frame}
+%\section{\textbf{Group Theory with SageMath}}
 \begin{frame}[fragile]{Introduction to Group Theory with SageMath}
 \textbf{Group Theory} studies algebraic structures called \emph{groups}.
 
@@ -1324,9 +1366,82 @@ G = SymmetricGroup(3)
 G.subgroups()
 \end{lstlisting}
 \end{frame}
+\begin{frame}[fragile]{List of important commands}
+\begin{itemize}
+\item Create your environment with
+\begin{lstlisting}[style=advancedshell]
+$conda create -f `yml file' -n `env_name' python=3.9 
+\end{lstlisting}
 
-\begin{frame}{Usefull tutorials}
-
+\item Activate that env
+\begin{lstlisting}[style=advancedshell]
+$condo activate <env_name>
+\end{lstlisting}
+\item Install Jupyter
+\begin{lstlisting}[style=advancedshell]
+$conda install -y jupyter  
+\end{lstlisting}
+\item Add the current env in the notebook kernel
+\begin{lstlisting}[style=advancedshell]
+$python -m ipykernel install --user --name <env_name> --display-name 'kernel_name'
+\end{lstlisting}
+\item Export your conda in yml file 
+\begin{lstlisting}[style=advancedshell]
+$conda env export | grep -v `^prefix:' > env.yml  
+\end{lstlisting}
+\end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]{More commands and IDEs}
+\begin{itemize}
+\item Open \texttt{powershell} on windows:
+\begin{lstlisting}[style=advancedshell]
+Press "Ctrl + r" 
+Type "powershell"
+\end{lstlisting}
+
+\item Launch your linux virtual machine: 
+\begin{lstlisting}[style=advancedshell]
+$wsl -d Ubuntu
+\end{lstlisting}
+\item Activate your 'sage' environment 
+\begin{lstlisting}[style=advancedshell]
+$conda activate sage
+\end{lstlisting}
+\end{itemize}
+\begin{block}{\textbf{List of IDE for coding}}
+	\begin{itemize}
+		\item \href{https://code.visualstudio.com/}{Visual Studio}
+		\item \href{https://www.spyder-ide.org/}{Spyder IDE}
+		\item \href{https://atom-editor.cc/}{Atom}
+		\item \href{https://cocalc.com/}{\textbf{Cocalc}: Collaborative Calculation}
+	\end{itemize}
+\end{block}
+\end{frame}
+\begin{frame}{Usefull tutorials}
+\begin{block}{\textbf{Link to Sympy documentation}}
+	\begin{itemize}
+		\item \href{https://docs.sympy.org/dev/explanation/gotchas.html}{What is \texttt{Sympy}?}
+		\item \href{https://docs.sympy.org/dev/tutorials/intro-tutorial/basic_operations.html}{Basic operation with Sympy}
+		\item \href{https://docs.sympy.org/dev/tutorials/intro-tutorial/simplification.html}{Simplification with sympy}
+		\item \href{https://docs.sympy.org/dev/tutorials/intro-tutorial/calculus.html}{Basic calculus}
+		\item \href{https://docs.sympy.org/dev/tutorials/intro-tutorial/solvers.html}{Solving Equations}
+		\item \href{https://docs.sympy.org/dev/tutorials/intro-tutorial/matrices.html}{Matrix manipulations}		
+		\item  \href{https://docs.sympy.org/dev/tutorials/physics/index.html}{Physics Tutorials}
+	\end{itemize}
+\end{block}
+
+\begin{block}{\textbf{Link to Sage documentation}}
+\begin{itemize}
+	\item \href{https://doc.sagemath.org/html/en/tutorial/tour.html}{What is \texttt{sage}? A guide tour.}
+	\item \href{https://doc.sagemath.org/html/en/tutorial/tour_linalg.html}{Linear Algebra}
+	\item \href{https://doc.sagemath.org/html/en/tutorial/tour_polynomial.html}{Polynomials and roots}
+	\item \href{https://doc.sagemath.org/html/en/reference/groups/sage/groups/groups_catalog.html}{Groups Catalogs}
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\section{\textbf{Live demo...}}
 
 \end{document}

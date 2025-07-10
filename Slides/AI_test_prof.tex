@@ -4,7 +4,8 @@
 % Packages needed
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath, amssymb}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathrsfs}
 \usepackage{tikz}       % For drawing the diagram
 \usetikzlibrary{arrows.meta, decorations.pathreplacing}
 \usetikzlibrary{patterns}
@@ -265,4 +266,339 @@
 			\end{tikzpicture}
 		\end{center}
 	\end{figure}
+	
+	\section{04.07.2025}
+	\underline{\textbf{Exercice sur $S^3 \subset \mathbb{R}^4$}}
+	
+	\[
+	X = -x^2 \frac{\partial}{\partial x^1} + x^1 \frac{\partial}{\partial x^2} + x^4 \frac{\partial}{\partial x^3} - x^3 \frac{\partial}{\partial x^4}
+	\]
+	\[
+	Y = -x^3 \frac{\partial}{\partial x^1} - x^4 \frac{\partial}{\partial x^2} + x^1 \frac{\partial}{\partial x^3} + x^2 \frac{\partial}{\partial x^4}
+	\]
+	\[
+	Z = -x^4 \frac{\partial}{\partial x^1} + x^3 \frac{\partial}{\partial x^2} - x^2 \frac{\partial}{\partial x^3} + x^1 \frac{\partial}{\partial x^4}
+	\]
+	
+	\begin{enumerate}
+		\item S'assurer que ce sont des champs de vecteurs sur $S^3$.
+		\item Montrer qu'ils sont linéairement indépendants.
+	\end{enumerate}
+	
+
+2. \textbf{Crochet de Lie de Champ de vecteur}
+Soient 
+\[
+X = \sum_{i=1}^{n} X^i \frac{\partial}{\partial x^i} = X^i \partial_i
+\]
+et
+\[
+Y = \sum_{j=1}^{n} Y^j \frac{\partial}{\partial x^j} = Y^j \partial_j
+\]
+où\quad $\partial_k = \frac{\partial}{\partial x^k}$
+	
+	
+\begin{align*}
+	TM &= \bigcup_{p \in M} T_pM \\ 
+	&= \left. \bigcup_{p \in M} T_pM \right. \\ 
+		&\equiv \text{Fibré tangent de } M\\
+\end{align*}
+
+	
+	Comme $T_pM$ est un e.v., on note $T_p^*M$ son dual. On pose
+	\[
+	T^*M = \bigcup_{p \in M} T_p^*M
+	\]
+	\[
+	\text{(Fibré cotangent.)}
+	\]
+
+		On définit une projection naturelle~: 
+	\begin{align*}
+		\pi &: TM \to M \\ 
+		(p, v_p) &\mapsto p, \text{ si } v_p \in T_p M
+	\end{align*}
+		
+		\underline{Def.} Un champ de vecteurs sur $M$ est une application 
+		\[
+		X : M \to TM
+		\]
+		vérifiant :
+		\[
+		\pi \circ X = \mathrm{id}_M
+		\]
+		
+		\textcolor{red}{(En fait $TM$ est une variété de dimension $2 \dim M$)}
+		
+		
+		Si $X$ est un champ de vecteurs sur $M$, $X(p) \in T_pM$, \\
+		$\forall p \in M$, donc en c.l.
+		\[
+		X(p) = \sum_{i=1}^{n} X^i(p) \left. \frac{\partial}{\partial x^i} \right|_p
+		\]
+		On peut donc écrire :
+		\[
+		X = \sum_{i=1}^{n} X^i \frac{\partial}{\partial x^i}
+		\]
+		
+		
+		où $X^i$ sont des fonctions lisses sur un ouvert de $M$.
+		
+		\underline{\textbf{Notation}}
+		
+		\begin{itemize}
+			\item $\mathscr{X}(M)$ = champs lisses sur $M$.
+			\item Si $X \in \mathscr{X}(M)$, $p \in M$, $X_p := X(p)$.
+			\item Si $f : M \longrightarrow N$ est différentiable en $p \in M$ et $X \in \mathscr{X}(M)$,
+		\end{itemize}
+		
+		\[
+		T_p f \cdot X|_p = X|_p(f)
+		\]
+		désignera l'action de la différentielle en $p$ de $f$ sur le vecteur tangent $X|_p$.
+		
+		\[
+		\text{\underline{Ex}} \qquad \text{Sur } \mathbb{R}^3
+		\]
+		\[
+		X = xz \frac{\partial}{\partial x} + x^2 y \frac{\partial}{\partial y} + \frac{\partial}{\partial z}
+		\]
+		
+		\underline{\textbf{Exercice}} sur $S^3 \subset \mathbb{R}^4$, \\
+		
+		\[
+		X = -x^2 \frac{\partial}{\partial x^1} + x^1 \frac{\partial}{\partial x^2} + x^4 \frac{\partial}{\partial x^3} - x^3 \frac{\partial}{\partial x^4}
+		\]
+		\[
+		Y = -x^3 \frac{\partial}{\partial x^1} - x^4 \frac{\partial}{\partial x^2} + x^1 \frac{\partial}{\partial x^3} + x^2 \frac{\partial}{\partial x^4}
+		\]
+		\[
+		Z = -x^4 \frac{\partial}{\partial x^1} + x^3 \frac{\partial}{\partial x^2} - x^2 \frac{\partial}{\partial x^3} + x^1 \frac{\partial}{\partial x^4}
+		\]
+		
+		\vspace{0.3cm}
+		\begin{enumerate}
+			
+			\item S'assurer que ce sont des champs de vecteurs sur $S^3$.
+			\item Montrer qu'ils sont linéairement indépendants.
+			
+		\end{enumerate}
+		
+\begin{align*}
+	XY &= \left( \sum_{i=1}^n X^i \frac{\partial}{\partial x^i} \right) \left( \sum_{j=1}^n Y^j \frac{\partial}{\partial x^j} \right) \\ 
+	&= \sum_{i=1}^n \sum_{j=1}^n \left( X^i \frac{\partial}{\partial x^i} \right) \left( Y^j \frac{\partial}{\partial x^j} \right) \\
+	&= \sum_{i=1}^n \sum_{j=1}^n X^i \left[ \frac{\partial Y^j}{\partial x^i} \frac{\partial}{\partial x^j} + Y^j \frac{\partial^2}{\partial x^i \partial x^j} \right] \\
+	&= \left( X^i \frac{\partial Y^j}{\partial x^i} \right) \frac{\partial}{\partial x^j} + X^i Y^j \frac{\partial^2}{\partial x^i \partial x^j}
+\end{align*}
+	
+	\begin{align*}
+		\cdot \quad YX &= (Y^j \partial_j X^i) \partial_i + X^i Y^j \partial_{ji}^2 \\
+		\cdot \quad XY - YX &= \left[ X^i \partial_i Y^j - Y^i \partial_i X^j \right] \partial_j
+	\end{align*}
+	On pose \([X, Y] = XY - YX =\) \emph{crochet de Lie de \(X\) et \(Y\)}.
+	
+	\section{07.07.2025}
+	Pour tout $g \in G$, on définit \\
+	$L_g : G \to G$, $R_g: G \to G$\\
+	\[
+	\begin{array}{ll}
+		L_g : & h \mapsto gh \\
+		R_g : & h \mapsto hg
+	\end{array}
+	\]
+	Elles sont $C^\infty$ et vérifient :
+	\[
+	\begin{aligned}
+		& L_g \circ R_h = R_h \circ L_g, \quad \forall g, h \\
+		& L_g \circ L_h = L_{gh} \\
+		& R_g \circ R_h = R_{hg} \\
+		& L_e = R_e = Id_G \\
+	\end{aligned}
+	\]
+	\medskip
+	
+	\noindent
+	\textasteriskcentered~Les translations sont des difféo. \\
+	$L_{g^{-1}} = L_g^{-1}$ \\
+	et $R_{g^{-1}} = R_g^{-1}$ \\
+	
+	\medskip
+	
+	\noindent
+	\textbf{Exemple} \\
+	$GL(n, \mathbb{R})$ \\
+	\[
+	H_3 = \left\lbrace
+	\begin{pmatrix}
+		1 & x & z \\
+		0 & 1 & y \\
+		0 & 0 & 1
+	\end{pmatrix} ,\, x, y, z \in \mathbb{R}
+	\right\rbrace
+	\]
+	\medskip
+	
+	\noindent
+	\textasteriskcentered~On rappelle qu'une transformation affine de $\mathbb{R}$ est une application
+	\[
+	f : \mathbb{R} \longrightarrow \mathbb{R}, \quad x \mapsto ax + b
+	\]
+	où $(a, b) \in \mathbb{R}^* \times \mathbb{R}$.
+	\\
+	Si $g : x \mapsto a'x + b'$ est une autre transformation affine, on a :
+	\[
+	(f \circ g)(x) = f(a'x + b') = a(a'x + b') + b = aa'x + ab' + b
+	\]
+	\medskip
+	
+	$f \circ g$ est un T.A.
+	
+	\[
+	\text{Aff}(\mathbb{R}) = \left\lbrace f : x \mapsto ax + b,\,\, a \in \mathbb{R}^*, b \in \mathbb{R} \right\rbrace
+	\]
+	est un groupe.
+	
+	L'inverse $f : x \mapsto a x + b$ est
+	\[
+	f^{-1} : x \mapsto \frac{1}{a}x - \frac{b}{a}
+	\]
+	En fait $\operatorname{Aff}(\mathbb{R}) = \mathbb{R}^* \ltimes \mathbb{R}$. Avec la structure différentielle induite par celle de $\mathbb{R}^* \times \mathbb{R}$, $\operatorname{Aff}(\mathbb{R})$ est un groupe de Lie.
+	
+	\[
+	\operatorname{Aff}(\mathbb{R}) = \mathbb{R}^* \times \mathbb{R}
+	\]
+	avec la loi
+	\[
+	(a, b) (a', b') = (a a', a b' + b)
+	\]
+	
+	\textbf{Déf.} Soit $G$ un groupe de Lie.\\
+	Un sous-groupe de Lie de $G$ est une partie $H$ de $G$ vérifiant :
+	\begin{itemize}
+		\item $H$ est un sous-groupe de $G$,
+		\item $H$ est une sous-variété immergée de $G$ : $H \hookrightarrow G$ est une immersion.
+	\end{itemize}
+	
+	\textbf{\underline{Thm (É. Cartan)}}
+	
+	\vspace{1em}
+	
+	Tout sous-groupe fermé d'un groupe de Lie est un sous-groupe de Lie.
+	
+	\vspace{2em}
+	
+	En conséquence, tout sous-groupe fermé de $GL_n(\mathbb{R})$ est un groupe de Lie, dit groupe de Lie linéaire.
+	
+	\underline{\textbf{Exemple}}
+	
+	\begin{itemize}
+		\item $SL_n(\mathbb{R})$, $SL_n(\mathbb{C})$
+		\item $O(n)$, $O(n,\mathbb{C})$
+		\item $SO(n)$, $U(n)$
+	\end{itemize}
+	
+	sont des groupes de Lie linéaires.
+	
+	\vspace{1em}
+	\[
+	\underline{\text{III. \; Algèbre de Lie d'un groupe de Lie.}}
+	\]
+	
+	
+	\textbf{1. Champ de vecteurs invariant à gauche.}
+	
+	\vspace{1em}
+	
+	$G$, $e$, $\mathfrak{X}(G)$ (algèbre de Lie)
+	
+	\vspace{1em}
+	
+	\underline{Déf.} $X \in \mathfrak{X}(G)$ est dit invariant à gauche si :
+	
+	\[
+	T_h L_g \cdot X_h = X_{gh}, \quad \forall g, h \in G
+	\]
+	
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[scale=4, every node/.style={font=\small}]
+			% Draw the object G, with boundary
+			\draw[thick, blue!30!black] (0.2,0.2) .. controls (0,1) and (0.8,2.5) .. (2,2.2) 
+			.. controls (2.5,1.8) and (2.3,0.8) .. (1.8,0.3) 
+			.. controls (1.5,0.1) and (1,0.1) .. (0.2,0.2);
+			\node at (-0.05,0.15) {$G$};
+			
+			% Draw points for g1, g2, h, gh
+			\fill (0.7,0.55) circle (0.8pt);
+			\node[left] at (0.65,0.55) {$g_1$};
+			\fill (0.6,1.2) circle (0.8pt);
+			\node[left] at (0.57,1.2) {$g_2$};
+			\fill (1.15,1.1) circle (0.8pt);
+			\node[below] at (1.2,1.08) {$h$};
+			
+			\fill (1.65,1.85) circle (0.8pt);
+			\node[right] at (1.7,1.85) {$gh$};
+			
+			% Red arrows: left-invariant vector fields
+			\draw[->,red,thick] (0.7,0.55) -- +(0.25,0.28) node[right] {$X_{g_1}$};
+			\draw[->,red,thick] (0.6,1.2) -- +(0.45,0.22) node[right] {$X_{g_2}$};
+			\draw[->,red,thick] (1.15,1.1) -- +(0.32,0.42) node[right] {$X_{h}$};
+			\draw[->,red,thick] (1.65,1.85) -- +(0.22,0.15) node[right] {$X_{gh}$};
+			
+			% Blue arrow: pushforward
+			\draw[->,blue,thick] (1.65,1.85) -- +(0.26,-0.08) 
+			node[below right] {$T_h L_g X_h$};
+		\end{tikzpicture}
+	\end{figure}
+	
+	On note $\mathfrak{X}_L(G) \equiv$ champs inv. à gauche.
+	
+	\vspace{1em}
+	
+	\noindent
+	\textbf{Prop}: $\mathfrak{X}_L(G)$ est une sous-algèbre de Lie de $\mathfrak{X}(G)$.
+	
+	\underline{Def.} \\
+	$\mathfrak{X}_L(G) =$ algèbre de Lie de $G$.
+	
+	\vspace{1em}
+	
+	Soit $\xi \in T_e G$. On définit \\
+	(uniquement) $X^\xi \in \mathfrak{X}_L(G)$ :
+	
+	\[
+	(X^\xi)_g := T_e L_g \cdot \xi
+	\]
+	
+	
+	On montre que $X^\xi \in \mathfrak{X}_L(G)$. \\
+	En effet, $\forall g, h \in G$,
+\begin{align*}
+	(X^\xi)_{gh} &= T_e L_{gh} \, \xi \\
+	\phantom{(X^\xi)_{gh}} &= T_e(L_g \circ L_h) \, \xi \\
+	\phantom{(X^\xi)_{gh}} &  = T_h L_g \circ T_e L_h \, \xi = T_h L_g (X^\xi_h) \qed \\
+\end{align*}
+
+\textbf{Prop.} L'application
+\[
+T_e G \longrightarrow \mathfrak{X}_L(G)
+\]
+\[
+\xi \longmapsto X^\xi
+\]
+est un isomorphisme d'espaces vectoriels (d'e.v.).
+
+\vspace{1em}
+
+On peut dès lors transporter le crochet de Lie de $\mathfrak{X}_L(G)$ sur $T_e G$.
+
+Pour tous $\xi, \eta \in T_e G$,
+\[
+[\xi, \eta]_L := [X^\xi, X^\eta] \big|_e
+\]
+
+Ainsi, $(T_e G, [\, , \, ]_L)$ est une algèbre de Lie isomorphe à l'algèbre de Lie $\mathfrak{X}_L(G)$ du groupe de Lie $G$.
+
+
+	
 \end{document}
