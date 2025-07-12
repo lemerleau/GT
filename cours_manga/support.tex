@@ -599,6 +599,191 @@ Pour tous $\xi, \eta \in T_e G$,
 
 Ainsi, $(T_e G, [\, , \, ]_L)$ est une algèbre de Lie isomorphe à l'algèbre de Lie $\mathfrak{X}_L(G)$ du groupe de Lie $G$.
 
+\section{08.07.2025}
 
-	
+\textbf{Exo (Algèbre du Lie $\mathbb{H}_3$)}
+\[
+\mathbb{H}_3 = \mathbb{R}^3, \quad (a,b,c), (x,y,z) = (a+x, b+y, c+z+ay)
+\]
+\[
+e = (0,0,0)
+\]
+\[
+\mathfrak{h} = \operatorname{Lie}(\mathbb{H}_3) = \mathbb{R}^3 = \mathrm{vect}\{\xi_1, \xi_2, \xi_3\}
+\]
+\[
+S_1 \; \xi = (\xi^1, \xi^2, \xi^3) \in \mathbb{R}^3, \quad \text{et } g=(x,y,z)
+\]
+\[
+\text{on a :} \quad X|_g = T_e L_g \xi = 
+\begin{pmatrix}
+	1 & 0 & 0 \\
+	0 & 1 & 0 \\
+	0 & x & 1
+\end{pmatrix}
+\begin{pmatrix}
+	\xi^1 \\ \xi^2 \\ \xi^3
+\end{pmatrix}
+=
+\begin{pmatrix}
+	\xi^1 \\ \xi^2 \\ x\xi^2 + \xi^3
+\end{pmatrix}
+\]
+
+\begin{align*}
+	L_g(h) &= g \cdot h\\
+	&= (x, y, z)(u, v, w)\\
+	&= (x + u, y + v, z + w + x v)
+\end{align*}
+
+
+\begin{align*}
+	[H, P] &= HP - PH\\
+	&= \frac{\partial}{\partial x}\left(\frac{\partial}{\partial y} + x \frac{\partial}{\partial z}\right)
+	- \left(\frac{\partial}{\partial y} + x \frac{\partial}{\partial z}\right)\frac{\partial}{\partial x}\\
+	&= \frac{\partial}{\partial z} = Q
+\end{align*}
+\[
+\mathfrak{h}_3 = \mathrm{vect}\{\xi_1, \xi_2, \xi_3\} \quad \text{avec} \quad [\xi_1, \xi_2] = \xi_3.
+\]
+\[
+\underline{\text{Ex:}} \quad \text{Déterminer } af(\mathbb{R}) = \mathrm{Lie}(Af(\mathbb{R}))
+\]
+
+\begin{align*}
+	X^{\xi}_{(x_1, y_1, z_1)} &= \xi^1 \frac{\partial}{\partial x} + \xi^2 \frac{\partial}{\partial y}
+	+ (x \xi^2 + \xi^3) \frac{\partial}{\partial z} \\
+	&= \xi^1 \frac{\partial}{\partial x} + \xi^2\left(\frac{\partial}{\partial y} + x \frac{\partial}{\partial z}\right)
+	+ \xi^3 \frac{\partial}{\partial z}
+\end{align*}
+
+Le champ $X^\xi$ s'écrit :
+\begin{align*}
+	X &= \xi^1 \frac{\partial}{\partial x} + \xi^2 \frac{\partial}{\partial y} + x \xi^2 \frac{\partial}{\partial z}
+	+ \xi^3 \frac{\partial}{\partial z}
+\end{align*}
+
+Posons $H = \frac{\partial}{\partial x}$, $P = \frac{\partial}{\partial y} + x \frac{\partial}{\partial z}$
+
+on a:
+\[
+Q = \frac{\partial}{\partial z}
+\]
+
+\section*{III. Application exponentielle}
+
+Soit \( G \) un groupe de Lie, \\
+\(\mathfrak{g} = T_e G\) son algèbre de Lie. \\
+
+Si \( \xi \in \mathfrak{g} \), \( X \in \mathcal{X}_L(G) \) \\
+
+On note \( \gamma_X : \mathbb{R} \longrightarrow G \) \\
+la courbe intégrale de \( X \).
+
+\[
+\left\{
+\begin{aligned}
+	&\dot{\gamma}(t) = X^{\xi}_{\gamma(t)} \\
+	&\gamma(0) = e
+\end{aligned}
+\right.
+\]
+
+\textbf{Déf.} \quad 
+\[
+\exp : \mathfrak{g} \longrightarrow G
+\]
+\[
+\xi \longmapsto \gamma_\xi(1)
+\]
+
+\textbf{Prop.} \quad \(\exp\) est un difféo local (d'inv. réciproque).
+
+\[
+T_0 \exp = \mathrm{id}_{\mathfrak{g}}
+\]
+
+
+\textbf{Ex:} Déterminer \(\exp_{\mathcal{G}}\) dans les cas suivants: 
+\begin{itemize}
+	\item[1/] \(\mathcal{G} = (\mathbb{R}, +)\)
+	\item[1' bis:] \(\mathcal{G} = (\mathbb{R}^*, \times)\)
+	\item[2/] \(\mathbb{H}_3\), \(\operatorname{Aff}(\mathbb{R})\)
+\end{itemize}
+
+
+\textbf{Thm.} Soit \( G \) un groupe de Lie, \( H \) un sous-groupe de Lie.
+\[
+\mathfrak{h} = \left\{ \xi \in \mathfrak{g} \mid \exp(t \xi) \in H,\, \forall t \in \mathbb{R} \right\}
+\]
+
+\textbf{Ex.} Déterminer les algèbres de Lie de \( SL(n) \), \( SO(n) \), \( O(n) \), tous sous-groupes de Lie de \( GL(n, \mathbb{R}) \).
+
+\section*{IV - 2\`eme Thm de Lie}
+
+Étant donné \( G \), on sait lui associer une algèbre de Lie \(\mathfrak{g} = T_e G \simeq \mathcal{X}(\mathfrak{g})\). \\
+
+\underline{Question.} Étant donnée une algèbre de Lie \( \mathfrak{A} \), \\
+existe-t-il \( G \) tel que \( \mathfrak{A} = \operatorname{Lie}(G) \) ?
+
+\textbf{Thm. (3ème de Lie)} \\
+Soit $A$ une algèbre de Lie de dimension finie. Il existe un groupe de Lie $G$ d'algèbre de Lie isomorphe à $A$.
+
+\[
+\text{Quid de l'unicité?}
+\]
+\[
+(\mathbb{R}, +) \text{ et } S^1 \text{ sont des groupes de Lie de même algèbre de Lie } \mathbb{R}.
+\]
+
+Mais ces deux groupes de Lie ne sont pas isomorphes.
+
+\bigskip
+
+\textbf{Thm (Lie-Cartan)} \\
+Soit $\mathfrak{g}$ une algèbre de Lie de dimension finie. Il existe, à isomorphisme près, un unique groupe de Lie connexe et simplement connexe $\tilde{G}$ d'algèbre de Lie $\mathfrak{g}$.
+
+Tout autre groupe de Lie connexe $G$ d'algèbre de Lie $\mathfrak{g}$ est de la forme $G = \tilde{G} / \Gamma$,\\
+où $\Gamma$ est un sous-groupe discret du centre de $\tilde{G}$.
+
+\bigskip
+
+\textbf{Ex.} $\mathfrak{g} = \mathfrak{h}_3 = $ Heisenberg
+
+\begin{itemize}
+	\item $H_3 = \mathbb{R}^3$ \hspace{0.5cm} (Heisenberg group)
+	\item $\mathcal{Z}(H_3) = \left\{
+	\begin{pmatrix}
+		1 & 0 & t \\
+		0 & 1 & 0 \\
+		0 & 0 & 1
+	\end{pmatrix}
+	\,\Bigg|\,
+	t \in \mathbb{R}
+	\right\}\simeq \mathbb{R}$
+\end{itemize}
+
+Des sous-groupes discrets sont $\Gamma_k \simeq k\mathbb{Z}$
+
+\medskip
+
+Les groupes connexes correspondants sont:
+
+\[
+G_k = H_3 / \Gamma_k
+\]
+
+On va prendre $k = 1$:
+
+\[
+G_1 = H_3 / (\mathbb{R}^2 \times \mathbb{Z})
+\]
+
+On obtient :
+
+\[
+G_1 = \mathbb{R}^2 \times (\mathbb{R}/\mathbb{Z}) = \mathbb{R}^2 \times S^1
+\]
+
+\textbf{Exercice :} Écrire le produit sur $G_1$.
 \end{document}
